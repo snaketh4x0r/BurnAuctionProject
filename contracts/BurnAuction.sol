@@ -7,6 +7,7 @@ contract BurnAuction {
 	// todo make uint types explicit
 	// decide if co ordinator should be allowed to withdraw bid
 	
+	
 	// constants 
 	// Defines slot block duration
 	// number of blocks avaible in slot
@@ -44,20 +45,20 @@ contract BurnAuction {
 		//might not need this
 		// address to sends funds if bid withdrawn
         address withdrawAddress;
-		// Coordinator url
+		// Coordinator url 
         string url;
     }
 
     // bid structure
     struct Bid {
+	    // bid amount
         uint amount;
+		// used to indicate active auction for slot
         bool initialized;
     }
 	
 	// information of slot structure
     struct InfoSlot {
-        // Indicates if at least one batch has been forged on an slot
-        bool fullFilled;
         // current price of slot
         uint slotPrice;
         // current max target profit on slot
@@ -65,14 +66,14 @@ contract BurnAuction {
     }
 	
 	// Mappings
-	// mapping to get winner of slot
+	// mapping to control winner of slot
     mapping(uint => Coordinator) public slotWinner;
     // mapping to control bid by slot
     mapping(uint => Bid) public slotBid;
     // mapping to control information of slot
     mapping(uint => InfoSlot) public infoSlot;
 	
-	//events
+	// events
 	/**
      * @dev Event called when an Coordinator beat the current best bid of an ongoing auction
      */
@@ -91,8 +92,42 @@ contract BurnAuction {
         burnAddress = _burnAddress;
     }
 	
-	//functions
+	// functions
 	
 	
+	//helper functions
+	/**
+     * @dev Retrieve block number
+     * @return current block number
+     */
+    function getBlockNumber() public view virtual returns (uint) {
+        return block.number;
+    }
 
+    /**
+     * @dev Calculate slot from block number
+     * @param numBlock block number
+     * @return slot number
+     */
+    function block2slot(uint numBlock) public view returns (uint32) {
+        if (numBlock < genesisBlock) return 0;
+        return uint32((numBlock - genesisBlock) / (BLOCKS_PER_SLOT));
+    }
+	
+	/**
+     * @dev Retrieve current slot
+     * @return slot number
+     */
+    function currentSlot() public view returns (uint32) {
+        return block2slot(getBlockNumber());
+    }
+
+    /**
+     * @dev Retrieve the first block number for a given slot
+     * @param slot slot number
+     * @return block number
+     */
+    function getBlockBySlot(uint32 slot) public view returns (uint) {
+        return (genesisBlock + slot*BLOCKS_PER_SLOT);
+    }
 }
