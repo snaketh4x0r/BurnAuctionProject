@@ -7,7 +7,6 @@ contract BurnAuction {
 	// todo make uint types explicit
 	// decide if co ordinator should be allowed to withdraw bid
 	
-	
 	// constants 
 	// Defines slot block duration
 	// number of blocks avaible in slot
@@ -19,22 +18,22 @@ contract BurnAuction {
 	// Minimum bid to enter the auction
     uint public constant MIN_BID = 1 ether;
 	// Min differance between currentslot and auction slots
-    uint constant minNextSlots = 2;
+    uint constant MIN_NEXT_SLOTS = 2;
 	
 	// variables
 	// First block where the first slot begins
     uint public genesisBlock;
 	// Maximum rollup transactions: either off-chain or on-chain transactions
-    uint public MAX_TX;
+    uint public maxTx;
 	// Burn Address
-    address payable burn;
+    address payable burnAddress;
     // Default Coordinator
 	// will have to decide if we want to keep default Coordinator or not
     Coordinator public coDefault;
 	// profit per auction slot by Coordinator
-    uint public targetprofit;
+    uint public targetProfit;
 	// sum of fees of all transactions included in slot
-	uint public sumtotalfees;
+	uint public sumtotalFees;
 	
 	// Coordinator structure
     struct Coordinator {
@@ -78,7 +77,22 @@ contract BurnAuction {
      * @dev Event called when an Coordinator beat the current best bid of an ongoing auction
      */
     event currentBestBid(uint32 slot, uint256 amount, uint256 price, address Coordinator, string url);
-
+    
+	// todo move all governance parameters in Constructor
+	/**
+     * @dev BurnAuction Constructor
+     * Set first block where the first slot begin
+     * @param _burnAddress burner address
+     * @param _maxTx maximum transactions
+     */
+    constructor(uint256 _maxTx, address payable _burnAddress) public {
+        genesisBlock = getBlockNumber() + DELAY_GENESIS;
+        maxTx = _maxTx;
+        burnAddress = _burnAddress;
+    }
+	
+	//functions
+	
 	
 
 }
