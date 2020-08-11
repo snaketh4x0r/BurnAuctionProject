@@ -66,14 +66,19 @@ contract BurnAuction {
     }
 	
 	// Mappings
-	// mapping to control winner by slot
-    mapping(uint => Operator) public slotWinner;
+	// mapping to get winner of slot
+    mapping(uint => Coordinator) public slotWinner;
     // mapping to control bid by slot
     mapping(uint => Bid) public slotBid;
     // mapping to control information of slot
     mapping(uint => InfoSlot) public infoSlot;
 	
 	//events
+	/**
+     * @dev Event called when an Coordinator beat the current best bid of an ongoing auction
+     */
+    event currentBestBid(uint32 slot, uint256 amount, uint256 price, address Coordinator, string url);
+
 	
 
 }
