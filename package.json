@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "ethers": "^4.0.47",
-    "openzeppelin-solidity": "^2.5.0",
+    "openzeppelin-solidity": "^2.4.0",
     "web3": "^1.2.6"
   },
   "devDependencies": {
