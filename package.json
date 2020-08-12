@@ -20,7 +20,7 @@
     "truffle-assertions": "^0.9.2",
     "truffle-plugin-verify": "^0.3.9"
   },
-   "scripts": {
+  "scripts": {
     "test": "truffle test",
     "truffle": "truffle",
     "compile": "truffle compile",

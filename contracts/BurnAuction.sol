@@ -56,6 +56,8 @@ contract BurnAuction {
         uint slotPrice;
         // current max target profit on slot
 		uint maxtargetProfit;
+		// Indicates if at least one batch has been submitted to slot
+        bool fullFilled;
     }
 	
 	// Mappings
@@ -89,7 +91,7 @@ contract BurnAuction {
 	    uint32 _blocksPerSlot,
 		uint _delayGenesis,
 		uint _minBid,
-		uint _minNextSlots,	
+		uint _minNextSlots
 	) public {
         genesisBlock = getBlockNumber() + _delayGenesis;
         maxTx = _maxTx;
