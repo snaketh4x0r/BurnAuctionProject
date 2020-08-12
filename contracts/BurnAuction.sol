@@ -107,29 +107,48 @@ contract BurnAuction {
 	//complete them
 	
 	//function by which coordinator bids for himself
-	function bidbySelf(uint32 slot, string calldata url) external payable {
+	function bidBySelf(uint32 _slot, string calldata _url, uint _targetProfit, uint _sumtotalFees) external payable {
 	    require(slot >= currentSlot() + MIN_NEXT_SLOTS, 'This auction is already closed');
-	    Coordinator memory co = Coordinator(msg.sender, msg.sender, msg.sender, url);
-		//
+	    Coordinator memory co = Coordinator(msg.sender, msg.sender, msg.sender, _url);
+		uint burnBid = bid(_slot,co,_targetProfit,_sumtotalFees);
 		burn.transfer(burnBid);
 	}
 	
 	//coordinator bids using others address arguments
-	function bidforOthers() {
-	    
+	function bidForOthers(
+	    uint32 _slot,
+		uint _targetProfit,
+		uint _sumtotalFees,
+		address _beneficiaryAddress,
+		address _submitBatchAddress,
+		string calldata _url
+	) external payable {
+	    require(slot >= currentSlot() + MIN_NEXT_SLOTS, 'This auction is already closed');
+		Coordinator memory co = Coordinator(_beneficiaryAddress, _submitBatchAddress, _beneficiaryAddress, _url);
+		uint burnBid = bid(_slot,co,_targetProfit,_sumtotalFees);
+		burn.transfer(burnBid);
 	}
 	
-	// function needs to be exposed
+	// function needs to be exposed-done
 	/**
      * @dev Retrieve slot winner
-     * @return submitBatchAddress,beneficiaryAddress,Coordinator url,slot number,bidamount
+     * @return submitBatchAddress,beneficiaryAddress,Coordinator url,bidamount,targetProfit
      */
-	function getWinner(uint slot) public view returns (address, address, string memory, uint, uint){
-	    
+	function getWinner(uint _slot) external returns (address, address, string memory, uint) {
+		uint256 amount = slotBid[_slot].amount;
+        address batchSubmitter = slotWinner[_slot].submitBatchAddress;
+        address beneficiary = slotWinner[_slot].beneficiaryAddress;
+        string memory url = slotWinner[_slot].url;
+        return (batchSubmitter, beneficiary, url, amount);
 	}
 	
-	function checkWinner() {
-	
+	function checkWinner(uint _slot, address _coordinator) external returns (bool) {
+		address batchSubmitter = slotWinner[_slot].submitBatchAddress;
+		if(batchSubmitter == _coordinator){
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 	//helper functions
