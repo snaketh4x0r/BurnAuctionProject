@@ -31,10 +31,6 @@ contract BurnAuction {
     // Default Coordinator
 	// will have to decide if we want to keep default Coordinator or not
     Coordinator public coDefault;
-	// profit per auction slot by Coordinator
-    uint public targetProfit;
-	// sum of fees of all transactions included in slot
-	uint public sumtotalFees;
 	
 	// Coordinator structure
     struct Coordinator {
@@ -51,10 +47,14 @@ contract BurnAuction {
 
     // bid structure
     struct Bid {
-	    // bid amount
+	    // bid amount = sumtotalFees - targetProfit
         uint amount;
 		// used to indicate active auction for slot
         bool initialized;
+		// profit per auction slot by Coordinator
+        uint public targetProfit;
+	    // sum of fees of all transactions included in slot
+	    uint public sumtotalFees;
     }
 	
 	// information of slot structure
@@ -77,7 +77,7 @@ contract BurnAuction {
 	/**
      * @dev Event called when an Coordinator beat the current best bid of an ongoing auction
      */
-    event currentBestBid(uint32 slot, uint256 amount, uint256 price, address Coordinator, string url);
+    event currentBestBid(uint32 slot, uint amount, uint sumtotalFees, uint targetProfit, address Coordinator, string url);
     
 	// todo move all governance parameters in Constructor
 	/**
@@ -93,14 +93,36 @@ contract BurnAuction {
     }
 	
 	// functions
+	//update with natspec comments
 	
+	function bid(
+	    uint32 slot,
+		Coordinator memory co,
+		uint _targetProfit,
+		uint _sumtotalFees,
+	) internal returns (uint) {
+	    uint burnAmount = 0;
+		
+	}
+	
+	//complete them
+	
+	//function by which coordinator bids for himself
+	function bidbySelf() {
+	
+	}
+	
+	//coordinator bids using other address arguments
+	function bidforOthers() {
+	
+	}
 	
 	//helper functions
 	/**
      * @dev Retrieve block number
      * @return current block number
      */
-    function getBlockNumber() public view virtual returns (uint) {
+    function getBlockNumber() public view returns (uint) {
         return block.number;
     }
 
