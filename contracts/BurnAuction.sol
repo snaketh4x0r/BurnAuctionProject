@@ -6,6 +6,7 @@ contract BurnAuction {
 	// discuss if you want to incentivize early bidders for slots using bonus
 	// todo make uint types explicit
 	// discuss need for default Coordinator
+	// discuss need to prevent submit batches multiple times after knowing hubble architecture
 		
 	// number of blocks available in slot
 	uint32 public blocksPerSlot;
@@ -56,8 +57,6 @@ contract BurnAuction {
         uint slotPrice;
         // current max target profit on slot
 		uint maxtargetProfit;
-		// Indicates if at least one batch has been submitted to slot
-        bool fullFilled;
     }
 	
 	// Mappings
@@ -197,9 +196,5 @@ contract BurnAuction {
      */
     function getBlockBySlot(uint32 slot) public view returns (uint) {
         return (genesisBlock + slot*blocksPerSlot);
-    }
-	
-	function fullFilledSlot(uint32 slot) public view returns (bool) {
-        return infoSlot[slot].fullFilled;
     }
 }
