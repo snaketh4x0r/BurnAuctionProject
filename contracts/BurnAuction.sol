@@ -5,28 +5,22 @@ contract BurnAuction {
 	
 	// discuss if you want to incentivize early bidders for slots using bonus
 	// todo make uint types explicit
-	
-	
-	// constants 
-	// Defines slot block duration
-	// number of blocks avaible in slot
-	uint32 constant public BLOCKS_PER_SLOT = 100;
+	// discuss need for default Coordinator
+		
+	// number of blocks available in slot
+	uint32 public blocksPerSlot;
 	// number of blocks after contract deployment for genesisBlock number
-    uint constant public DELAY_GENESIS = 1000;
-	// deadline after which slot not available for bidding
-    uint constant public SLOT_DEADLINE = 20;
-	// Minimum bid to enter the auction
-    uint public constant MIN_BID = 1 ether;
-	// Min differance between currentslot and auction slots
-    uint constant MIN_NEXT_SLOTS = 2;
-	
-	// variables
+	uint public delayGenesis;
 	// First block where the first slot begins
     uint public genesisBlock;
 	// Maximum rollup transactions: either off-chain or on-chain transactions
     uint public maxTx;
+	// Min differance between currentslot and auction slots
+	uint public minNextSlots;
 	// Burn Address
     address payable burnAddress;
+	// Minimum bid to enter the auction
+	uint public minBid;
     // Default Coordinator
 	// will have to decide if we want to keep default Coordinator or not
     Coordinator public coDefault;
@@ -78,17 +72,32 @@ contract BurnAuction {
      */
     event currentBestBid(uint32 slot, uint amount, uint sumtotalFees, uint targetProfit, address Coordinator, string url);
     
-	// todo move all governance parameters in Constructor
+	// todo move all governance parameters in Constructor-done
 	/**
      * @dev BurnAuction Constructor
      * Set first block where the first slot begin
-     * @param _burnAddress burner address
      * @param _maxTx maximum transactions
+     * @param _burnAddress burner address
+	 * @param _blocksPerSlot number of blocks in slot
+	 * @param _delayGenesis delay genesisBlock by this
+	 * @param _minBid minimum bid for a auction slot
+	 * @param _minNextSlots differance between currentslot and auction slot
      */
-    constructor(uint256 _maxTx, address payable _burnAddress) public {
-        genesisBlock = getBlockNumber() + DELAY_GENESIS;
+    constructor(
+	    uint256 _maxTx,
+	    address payable _burnAddress,
+	    uint32 _blocksPerSlot,
+		uint _delayGenesis,
+		uint _minBid,
+		uint _minNextSlots,	
+	) public {
+        genesisBlock = getBlockNumber() + _delayGenesis;
         maxTx = _maxTx;
         burnAddress = _burnAddress;
+		blocksPerSlot = _blocksPerSlot;
+		delayGenesis = _delayGenesis;
+		minBid = _minBid;
+		minNextSlots = _minNextSlots;		
     }
 	
 	// functions
@@ -104,11 +113,11 @@ contract BurnAuction {
 		return burnBid;
 	}
 	
-	//complete them
+	//complete them-done
 	
 	//function by which coordinator bids for himself
 	function bidBySelf(uint32 _slot, string calldata _url, uint _targetProfit, uint _sumtotalFees) external payable {
-	    require(_slot >= currentSlot() + MIN_NEXT_SLOTS, 'This auction is already closed');
+	    require(_slot >= currentSlot() + minNextSlots, 'This auction is already closed');
 	    Coordinator memory co = Coordinator(msg.sender, msg.sender, msg.sender, _url);
 		uint burnBid = bid(_slot,co,_targetProfit,_sumtotalFees);
 		burnAddress.transfer(burnBid);
@@ -124,7 +133,7 @@ contract BurnAuction {
 		address _withdrawAddress,
 		string calldata _url
 	) external payable {
-	    require(_slot >= currentSlot() + MIN_NEXT_SLOTS, 'This auction is already closed');
+	    require(_slot >= currentSlot() + minNextSlots, 'This auction is already closed');
 		Coordinator memory co = Coordinator(_beneficiaryAddress, _submitBatchAddress, _withdrawAddress, _url);
 		uint burnBid = bid(_slot,co,_targetProfit,_sumtotalFees);
 		burnAddress.transfer(burnBid);
@@ -133,7 +142,7 @@ contract BurnAuction {
 	// function needs to be exposed-done
 	/**
      * @dev Retrieve slot winner
-     * @return submitBatchAddress,beneficiaryAddress,Coordinator url,bidamount,targetProfit
+     * @return submitBatchAddress,beneficiaryAddress,Coordinator url,bidamount
      */
 	function getWinner(uint _slot) external returns (address, address, string memory, uint) {
 		uint256 amount = slotBid[_slot].amount;
@@ -168,7 +177,7 @@ contract BurnAuction {
      */
     function block2slot(uint numBlock) public view returns (uint32) {
         if (numBlock < genesisBlock) return 0;
-        return uint32((numBlock - genesisBlock) / (BLOCKS_PER_SLOT));
+        return uint32((numBlock - genesisBlock) / (blocksPerSlot));
     }
 	
 	/**
@@ -185,6 +194,10 @@ contract BurnAuction {
      * @return block number
      */
     function getBlockBySlot(uint32 slot) public view returns (uint) {
-        return (genesisBlock + slot*BLOCKS_PER_SLOT);
+        return (genesisBlock + slot*blocksPerSlot);
+    }
+	
+	function fullFilledSlot(uint32 slot) public view returns (bool) {
+        return infoSlot[slot].fullFilled;
     }
 }
