@@ -51,9 +51,9 @@ contract BurnAuction {
 		// used to indicate active auction for slot
         bool initialized;
 		// profit per auction slot by Coordinator
-        uint public targetProfit;
+        uint targetProfit;
 	    // sum of fees of all transactions included in slot
-	    uint public sumtotalFees;
+	    uint sumtotalFees;
     }
 	
 	// information of slot structure
@@ -98,20 +98,20 @@ contract BurnAuction {
 	    uint32 slot,
 		Coordinator memory co,
 		uint _targetProfit,
-		uint _sumtotalFees,
+		uint _sumtotalFees
 	) internal returns (uint) {
 	    uint burnBid = 0;
-		
+		return burnBid;
 	}
 	
 	//complete them
 	
 	//function by which coordinator bids for himself
 	function bidBySelf(uint32 _slot, string calldata _url, uint _targetProfit, uint _sumtotalFees) external payable {
-	    require(slot >= currentSlot() + MIN_NEXT_SLOTS, 'This auction is already closed');
+	    require(_slot >= currentSlot() + MIN_NEXT_SLOTS, 'This auction is already closed');
 	    Coordinator memory co = Coordinator(msg.sender, msg.sender, msg.sender, _url);
 		uint burnBid = bid(_slot,co,_targetProfit,_sumtotalFees);
-		burn.transfer(burnBid);
+		burnAddress.transfer(burnBid);
 	}
 	
 	//coordinator bids using others address arguments
@@ -119,14 +119,15 @@ contract BurnAuction {
 	    uint32 _slot,
 		uint _targetProfit,
 		uint _sumtotalFees,
-		address _beneficiaryAddress,
+		address payable _beneficiaryAddress,
 		address _submitBatchAddress,
+		address _withdrawAddress,
 		string calldata _url
 	) external payable {
-	    require(slot >= currentSlot() + MIN_NEXT_SLOTS, 'This auction is already closed');
-		Coordinator memory co = Coordinator(_beneficiaryAddress, _submitBatchAddress, _beneficiaryAddress, _url);
+	    require(_slot >= currentSlot() + MIN_NEXT_SLOTS, 'This auction is already closed');
+		Coordinator memory co = Coordinator(_beneficiaryAddress, _submitBatchAddress, _withdrawAddress, _url);
 		uint burnBid = bid(_slot,co,_targetProfit,_sumtotalFees);
-		burn.transfer(burnBid);
+		burnAddress.transfer(burnBid);
 	}
 	
 	// function needs to be exposed-done
