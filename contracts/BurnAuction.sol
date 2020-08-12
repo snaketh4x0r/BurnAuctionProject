@@ -24,7 +24,8 @@ contract BurnAuction {
 	uint public minBid;
     // Default Coordinator
 	// will have to decide if we want to keep default Coordinator or not
-    Coordinator public coDefault;
+    Coordinator public coD
+	efault;
 	
 	// Coordinator structure
     struct Coordinator {
@@ -111,6 +112,15 @@ contract BurnAuction {
 		uint _sumtotalFees
 	) internal returns (uint) {
 	    uint burnBid = 0;
+		//require checks
+		if(slotBid[slot].initialized) {
+		} else {
+		
+		}
+		slotWinner[slot] = co;
+        slotBid[slot].amount = amount;
+		//update infoSlot
+		//emit event
 		return burnBid;
 	}
 	
