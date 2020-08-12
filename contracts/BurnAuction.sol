@@ -5,7 +5,6 @@ contract BurnAuction {
 	
 	// discuss if you want to incentivize early bidders for slots using bonus
 	// todo make uint types explicit
-	// decide if co ordinator should be allowed to withdraw bid
 	
 	
 	// constants 
@@ -37,7 +36,7 @@ contract BurnAuction {
 	    // address to return Coordinator failed bid amount back
         address payable beneficiaryAddress;
 		// Coordinator address having right to submit batch
-        address submitAddress;
+        address submitBatchAddress;
 		//might not need this
 		// address to sends funds if bid withdrawn
         address withdrawAddress;
@@ -101,19 +100,35 @@ contract BurnAuction {
 		uint _targetProfit,
 		uint _sumtotalFees,
 	) internal returns (uint) {
-	    uint burnAmount = 0;
+	    uint burnBid = 0;
 		
 	}
 	
 	//complete them
 	
 	//function by which coordinator bids for himself
-	function bidbySelf() {
-	
+	function bidbySelf(uint32 slot, string calldata url) external payable {
+	    require(slot >= currentSlot() + MIN_NEXT_SLOTS, 'This auction is already closed');
+	    Coordinator memory co = Coordinator(msg.sender, msg.sender, msg.sender, url);
+		//
+		burn.transfer(burnBid);
 	}
 	
-	//coordinator bids using other address arguments
+	//coordinator bids using others address arguments
 	function bidforOthers() {
+	    
+	}
+	
+	// function needs to be exposed
+	/**
+     * @dev Retrieve slot winner
+     * @return submitBatchAddress,beneficiaryAddress,Coordinator url,slot number,bidamount
+     */
+	function getWinner(uint slot) public view returns (address, address, string memory, uint, uint){
+	    
+	}
+	
+	function checkWinner() {
 	
 	}
 	
