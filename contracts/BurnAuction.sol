@@ -30,9 +30,6 @@ contract BurnAuction {
     struct Coordinator {
 	    // address to return unsuccessful bid funds back
         address payable returnAddress;
-		//might not need this
-	    // address to return Coordinator failed bid amount back
-        address payable beneficiaryAddress;
 		// Coordinator address having right to submit batch
         address submitBatchAddress;
 		// Coordinator url 
@@ -92,7 +89,6 @@ contract BurnAuction {
 		uint _minBid,
 		uint _minNextSlots,
 		address payable coReturnAddress,
-		address payable coBeneficiaryAddress,
 		address coSubmitBatchAddress,
 		string memory coUrl
 	) public {
@@ -103,7 +99,7 @@ contract BurnAuction {
 		delayGenesis = _delayGenesis;
 		minBid = _minBid;
 		minNextSlots = _minNextSlots;		
-		coDefault = Coordinator(coReturnAddress,coBeneficiaryAddress,coSubmitBatchAddress,coUrl);
+		coDefault = Coordinator(coReturnAddress,coSubmitBatchAddress,coUrl);
     }
 	
 	// functions
@@ -135,7 +131,7 @@ contract BurnAuction {
 	//function by which coordinator bids for himself
 	function bidBySelf(uint32 _slot, string calldata _url, uint _targetProfit, uint _sumtotalFees) external payable {
 	    require(_slot >= currentSlot() + minNextSlots, 'This auction is already closed');
-	    Coordinator memory co = Coordinator(msg.sender, msg.sender, msg.sender, _url);
+	    Coordinator memory co = Coordinator(msg.sender, msg.sender, _url);
 		uint burnBid = bid(_slot,co,_targetProfit,_sumtotalFees);
 		burnAddress.transfer(burnBid);
 	}
@@ -145,13 +141,12 @@ contract BurnAuction {
 	    uint32 _slot,
 		uint _targetProfit,
 		uint _sumtotalFees,
-		address payable _beneficiaryAddress,
+		address payable _returnAddress,
 		address _submitBatchAddress,
-		address _withdrawAddress,
 		string calldata _url
 	) external payable {
 	    require(_slot >= currentSlot() + minNextSlots, 'This auction is already closed');
-		Coordinator memory co = Coordinator(_beneficiaryAddress, _submitBatchAddress, _withdrawAddress, _url);
+		Coordinator memory co = Coordinator(_returnAddress, _submitBatchAddress, _url);
 		uint burnBid = bid(_slot,co,_targetProfit,_sumtotalFees);
 		burnAddress.transfer(burnBid);
 	}
@@ -161,7 +156,7 @@ contract BurnAuction {
      * @dev Retrieve slot winner
      * @return submitBatchAddress,returnAddress,Coordinator url,bidamount
      */
-	function getWinner(uint _slot) external returns (address, address, string memory, uint) {
+	function getWinner(uint _slot) external view returns (address, address, string memory, uint) {
 	    address batchSubmitter= slotWinner[_slot].submitBatchAddress;
 		if(batchSubmitter != address(0x00)){ 
 		uint256 amount = slotBid[_slot].amount;
@@ -174,7 +169,7 @@ contract BurnAuction {
 		}
 	}
 	
-	function checkWinner(uint _slot, address _winner) external returns (bool) {
+	function checkWinner(uint _slot, address _winner) external view returns (bool) {
 	    if (coDefault.submitBatchAddress == _winner) return true;
 		address coordinator = slotWinner[_slot].submitBatchAddress;
 		if(coordinator == _winner){
