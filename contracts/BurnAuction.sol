@@ -2,10 +2,10 @@ pragma solidity ^0.5.15;
 
 contract BurnAuction {
     
-	
-	// discuss if you want to incentivize early bidders for slots using bonus
+	// 1 next 1.3 bonus 10 1.3 10 0.13  1.3-1-0.13=burned
+	// discuss if you want to incentivize early bidders for slots using bonus skip for now
 	// todo make uint types explicit
-	// discuss need for default Coordinator
+	// discuss need for default Coordinator-keep it
 	// discuss need to prevent submit batches multiple times after knowing hubble architecture
 		
 	// number of blocks available in slot
@@ -24,18 +24,17 @@ contract BurnAuction {
 	uint public minBid;
     // Default Coordinator
 	// will have to decide if we want to keep default Coordinator or not
-    Coordinator public coD
-	efault;
+    Coordinator public coDefault;
 	
 	// Coordinator structure
     struct Coordinator {
+	    // address to return unsuccessful bid funds back
+        address payable returnAddress;
+		//might not need this
 	    // address to return Coordinator failed bid amount back
         address payable beneficiaryAddress;
 		// Coordinator address having right to submit batch
         address submitBatchAddress;
-		//might not need this
-		// address to sends funds if bid withdrawn
-        address withdrawAddress;
 		// Coordinator url 
         string url;
     }
@@ -91,7 +90,11 @@ contract BurnAuction {
 	    uint32 _blocksPerSlot,
 		uint _delayGenesis,
 		uint _minBid,
-		uint _minNextSlots
+		uint _minNextSlots,
+		address payable coReturnAddress,
+		address payable coBeneficiaryAddress,
+		address coSubmitBatchAddress,
+		string memory coUrl
 	) public {
         genesisBlock = getBlockNumber() + _delayGenesis;
         maxTx = _maxTx;
@@ -100,6 +103,7 @@ contract BurnAuction {
 		delayGenesis = _delayGenesis;
 		minBid = _minBid;
 		minNextSlots = _minNextSlots;		
+		coDefault = Coordinator(coReturnAddress,coBeneficiaryAddress,coSubmitBatchAddress,coUrl);
     }
 	
 	// functions
@@ -112,8 +116,10 @@ contract BurnAuction {
 		uint _sumtotalFees
 	) internal returns (uint) {
 	    uint burnBid = 0;
+		uint amount = 0;
 		//require checks
 		if(slotBid[slot].initialized) {
+		
 		} else {
 		
 		}
@@ -153,19 +159,25 @@ contract BurnAuction {
 	// function needs to be exposed-done
 	/**
      * @dev Retrieve slot winner
-     * @return submitBatchAddress,beneficiaryAddress,Coordinator url,bidamount
+     * @return submitBatchAddress,returnAddress,Coordinator url,bidamount
      */
 	function getWinner(uint _slot) external returns (address, address, string memory, uint) {
+	    address batchSubmitter= slotWinner[_slot].submitBatchAddress;
+		if(batchSubmitter != address(0x00)){ 
 		uint256 amount = slotBid[_slot].amount;
-        address batchSubmitter = slotWinner[_slot].submitBatchAddress;
-        address beneficiary = slotWinner[_slot].beneficiaryAddress;
+        address winner = slotWinner[_slot].submitBatchAddress;
+        address beneficiary = slotWinner[_slot].returnAddress;
         string memory url = slotWinner[_slot].url;
-        return (batchSubmitter, beneficiary, url, amount);
+        return (winner, beneficiary, url, amount);
+		} else {
+		return (coDefault.submitBatchAddress, coDefault.returnAddress, coDefault.url, 0);
+		}
 	}
 	
-	function checkWinner(uint _slot, address _coordinator) external returns (bool) {
-		address batchSubmitter = slotWinner[_slot].submitBatchAddress;
-		if(batchSubmitter == _coordinator){
+	function checkWinner(uint _slot, address _winner) external returns (bool) {
+	    if (coDefault.submitBatchAddress == _winner) return true;
+		address coordinator = slotWinner[_slot].submitBatchAddress;
+		if(coordinator == _winner){
 			return true;
 		} else {
 			return false;
