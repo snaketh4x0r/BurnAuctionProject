@@ -38,7 +38,7 @@ contract BurnAuction {
 
     // bid structure
     struct Bid {
-	    // bid amount = sumtotalFees - targetProfit
+	    // bid amount = sumtotalFees + targetProfit
         uint amount;
 		// used to indicate active auction for slot
         bool initialized;
@@ -48,6 +48,7 @@ contract BurnAuction {
 	    uint sumtotalFees;
     }
 	
+    //might be removed
 	// information of slot structure
     struct InfoSlot {
         // current price of slot
@@ -108,21 +109,42 @@ contract BurnAuction {
 	function bid(
 	    uint32 slot,
 		Coordinator memory co,
+		uint _sumtotalFees,
 		uint _targetProfit,
-		uint _sumtotalFees
+		uint value
 	) internal returns (uint) {
 	    uint burnBid = 0;
-		uint amount = 0;
+		uint amount = _sumtotalFees + _targetProfit;
 		//require checks
+		require(value >= amount,"Ether sent not enough");
 		if(slotBid[slot].initialized) {
-		
+		require(_sumtotalFees >= slotBid[slot].sumtotalFees,"include more txns");
+		require(_targetProfit < slotBid[slot].targetProfit,"take less profits");
+        // should we refund previous bidder?
 		} else {
-		
+		//amount greater than minBid
+		require(amount >= minBid,"bid not enough than minimum bid");		
+		slotBid[slot].initialized = true;
 		}
 		slotWinner[slot] = co;
+		// update bid info for slot
         slotBid[slot].amount = amount;
+		slotBid[slot].sumtotalFees = _sumtotalFees;
+		slotBid[slot].targetProfit = _targetProfit;
 		//update infoSlot
+		infoSlot[slot].maxtargetProfit = _targetProfit;
+		// update burnBid amount
+		//since hubble has no fees currently
+		//sumtotalfees can be 0 
+		//will be removed once hubble has fees
+		//will have to account for sumtotalFees less than _targetProfit but greator than 0
+		if (_sumtotalFees == 0){
+		burnBid = _targetProfit;
+		} else {
+		burnBid = _sumtotalFees - _targetProfit;
+		}
 		//emit event
+		emit currentBestBid(slot, slotBid[slot].amount, slotBid[slot].sumtotalFees, slotBid[slot].targetProfit, co.returnAddress, co.url);
 		return burnBid;
 	}
 	
@@ -132,7 +154,7 @@ contract BurnAuction {
 	function bidBySelf(uint32 _slot, string calldata _url, uint _targetProfit, uint _sumtotalFees) external payable {
 	    require(_slot >= currentSlot() + minNextSlots, 'This auction is already closed');
 	    Coordinator memory co = Coordinator(msg.sender, msg.sender, _url);
-		uint burnBid = bid(_slot,co,_targetProfit,_sumtotalFees);
+		uint burnBid = bid(_slot,co,_targetProfit,_sumtotalFees,msg.value);
 		burnAddress.transfer(burnBid);
 	}
 	
@@ -147,7 +169,7 @@ contract BurnAuction {
 	) external payable {
 	    require(_slot >= currentSlot() + minNextSlots, 'This auction is already closed');
 		Coordinator memory co = Coordinator(_returnAddress, _submitBatchAddress, _url);
-		uint burnBid = bid(_slot,co,_targetProfit,_sumtotalFees);
+		uint burnBid = bid(_slot,co,_targetProfit,_sumtotalFees,msg.value);
 		burnAddress.transfer(burnBid);
 	}
 	
