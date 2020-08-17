@@ -24,6 +24,8 @@
     "test": "truffle test",
     "truffle": "truffle",
     "compile": "truffle compile",
-    "migrate": "truffle migrate"
+    "migrate": "truffle migrate --reset",
+    "prettier": "prettier --write **/*.sol",
+    "lint": "prettier --check **/*.sol"
   }
 }
