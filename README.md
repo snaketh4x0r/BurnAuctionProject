@@ -1,4 +1,4 @@
-# Burn Auction Spec
+# :fire:Burn Auction Project
 
 ## Introduction 
 
@@ -39,8 +39,6 @@ and publish this as they bid.
 - Some other Co-ordinator can outbid previous co-ordinator with better bid.
 - If auction for a slot concludes(less than two slots ahead of currentslot),Co-ordinator is slot owner and can submit batch for that concluded slot.
 - We just burn the amount in the bid and the coordiantor gets all the fees. We assume the sum(fees) > burn.
-
-
 - Coordinator Slot Duration: 40 ETH blocks
 - New Slot opens every: 80 ETH blocks
 - Transactions censoring prevented by cost of constant bidding and burning own ether to stay as batch submitter for long time with constant burn rate of capital spent.
@@ -52,3 +50,12 @@ https://github.com/snaketh4x0r/BurnAuctionProject
 
 ## project notes
 https://hackmd.io/ZwQWkWeeT1Ku65vI0ERJnw
+
+## Installation
+
+**have truffle and ganache installed locally**
+**node >=12,truffle >= 5**
+1. git clone
+2. npm i
+3. start ganache and truffle compile && truffle migrate(or use npm run compile && npm run migrate)
+4. run tests with truffle tests
