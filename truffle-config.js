@@ -17,6 +17,7 @@
  * phrase from a file you've .gitignored so it doesn't accidentally become public.
  *
  */
+require("ts-node/register");
 
 const HDWalletProvider = require('@truffle/hdwallet-provider');
 const MNEMONIC = process.env.MNEMONIC;
@@ -36,7 +37,7 @@ module.exports = {
    *
    * $ truffle test --network <network-name>
    */
-
+  test_file_extension_regexp: /.*\.ts$/,
   networks: {
     // Useful for testing. The `development` name is special - truffle uses it by default
     // if it's defined here and no other network is specified at the command line.

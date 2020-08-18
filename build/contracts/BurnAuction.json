@@ -14618,61 +14618,9 @@
     "name": "solc",
     "version": "0.5.15+commit.6a57276f.Emscripten.clang"
   },
-  "networks": {
-    "1597658044144": {
-      "events": {
-        "0xad7686a5b734ffdd6bec25115930a417bc3983037ea535f5066f92bd0aa1de7f": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": false,
-              "internalType": "uint32",
-              "name": "slot",
-              "type": "uint32"
-            },
-            {
-              "indexed": false,
-              "internalType": "uint256",
-              "name": "amount",
-              "type": "uint256"
-            },
-            {
-              "indexed": false,
-              "internalType": "uint256",
-              "name": "sumtotalFees",
-              "type": "uint256"
-            },
-            {
-              "indexed": false,
-              "internalType": "uint256",
-              "name": "targetProfit",
-              "type": "uint256"
-            },
-            {
-              "indexed": false,
-              "internalType": "address",
-              "name": "Coordinator",
-              "type": "address"
-            },
-            {
-              "indexed": false,
-              "internalType": "string",
-              "name": "url",
-              "type": "string"
-            }
-          ],
-          "name": "currentBestBid",
-          "type": "event"
-        }
-      },
-      "links": {},
-      "address": "0xac0Db138b99f0f7538B1486d6588CcA1394Ea4ac",
-      "transactionHash": "0x52340bd77e687d9e834217035ca731f6980ce926ccfa188896a1b428b76d5d99"
-    }
-  },
+  "networks": {},
   "schemaVersion": "3.1.0",
-  "updatedAt": "2020-08-17T11:17:27.389Z",
-  "networkType": "ethereum",
+  "updatedAt": "2020-08-18T04:46:07.970Z",
   "devdoc": {
     "methods": {
       "block2slot(uint256)": {
