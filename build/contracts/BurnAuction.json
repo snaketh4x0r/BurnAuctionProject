@@ -14618,9 +14618,266 @@
     "name": "solc",
     "version": "0.5.15+commit.6a57276f.Emscripten.clang"
   },
-  "networks": {},
-  "schemaVersion": "3.1.0",
-  "updatedAt": "2020-08-18T04:46:07.970Z",
+  "networks": {
+    "1597772195543": {
+      "events": {
+        "0xad7686a5b734ffdd6bec25115930a417bc3983037ea535f5066f92bd0aa1de7f": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "uint32",
+              "name": "slot",
+              "type": "uint32"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "amount",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "sumtotalFees",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "targetProfit",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "Coordinator",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "string",
+              "name": "url",
+              "type": "string"
+            }
+          ],
+          "name": "currentBestBid",
+          "type": "event",
+          "signature": "0xad7686a5b734ffdd6bec25115930a417bc3983037ea535f5066f92bd0aa1de7f"
+        }
+      },
+      "links": {},
+      "address": "0x3951A346c8cf2E4c79dd5C4BfF0374A4093Ac5D3",
+      "transactionHash": "0xc24b1cfada8529db4678035fd9de73712a56a747eebb319b95428ba2741a3f8c"
+    },
+    "1597804911869": {
+      "events": {
+        "0xad7686a5b734ffdd6bec25115930a417bc3983037ea535f5066f92bd0aa1de7f": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "uint32",
+              "name": "slot",
+              "type": "uint32"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "amount",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "sumtotalFees",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "targetProfit",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "Coordinator",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "string",
+              "name": "url",
+              "type": "string"
+            }
+          ],
+          "name": "currentBestBid",
+          "type": "event",
+          "signature": "0xad7686a5b734ffdd6bec25115930a417bc3983037ea535f5066f92bd0aa1de7f"
+        }
+      },
+      "links": {},
+      "address": "0xE92A6C46C537912F1A774c07E3f3fd104E15bD36",
+      "transactionHash": "0x065904a28f4963b3243f5691a766204c13260e2fa9660279fe55f22ad40b394a"
+    },
+    "1597805246303": {
+      "events": {
+        "0xad7686a5b734ffdd6bec25115930a417bc3983037ea535f5066f92bd0aa1de7f": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "uint32",
+              "name": "slot",
+              "type": "uint32"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "amount",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "sumtotalFees",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "targetProfit",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "Coordinator",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "string",
+              "name": "url",
+              "type": "string"
+            }
+          ],
+          "name": "currentBestBid",
+          "type": "event",
+          "signature": "0xad7686a5b734ffdd6bec25115930a417bc3983037ea535f5066f92bd0aa1de7f"
+        }
+      },
+      "links": {},
+      "address": "0xaffc09F6707e95EE392542A72E31E778bf743FEc",
+      "transactionHash": "0x6d6c3f072e366898e2b261764e226b04a92ed49d6d99c45d6490f45faa9b5446"
+    },
+    "1597806307064": {
+      "events": {
+        "0xad7686a5b734ffdd6bec25115930a417bc3983037ea535f5066f92bd0aa1de7f": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "uint32",
+              "name": "slot",
+              "type": "uint32"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "amount",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "sumtotalFees",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "targetProfit",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "Coordinator",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "string",
+              "name": "url",
+              "type": "string"
+            }
+          ],
+          "name": "currentBestBid",
+          "type": "event",
+          "signature": "0xad7686a5b734ffdd6bec25115930a417bc3983037ea535f5066f92bd0aa1de7f"
+        }
+      },
+      "links": {},
+      "address": "0x9350a5C03198FC5A895f9e9e9438f14E6f155AC5",
+      "transactionHash": "0xcd009be24e522665eec8aa77860a6e28e1d586e960db095d8d3da6e84d9fc2ef"
+    },
+    "1597806882545": {
+      "events": {
+        "0xad7686a5b734ffdd6bec25115930a417bc3983037ea535f5066f92bd0aa1de7f": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "uint32",
+              "name": "slot",
+              "type": "uint32"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "amount",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "sumtotalFees",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "targetProfit",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "Coordinator",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "string",
+              "name": "url",
+              "type": "string"
+            }
+          ],
+          "name": "currentBestBid",
+          "type": "event",
+          "signature": "0xad7686a5b734ffdd6bec25115930a417bc3983037ea535f5066f92bd0aa1de7f"
+        }
+      },
+      "links": {},
+      "address": "0x88Fb372c3D3d84921a182eb29025B9417D84001E",
+      "transactionHash": "0xa6a72cf40a811ad945090ecd11f911dbf6c51b6a6124ab257d847830209ba4e8"
+    }
+  },
+  "schemaVersion": "3.0.18",
+  "updatedAt": "2020-08-19T03:15:50.170Z",
+  "networkType": "ethereum",
   "devdoc": {
     "methods": {
       "block2slot(uint256)": {
