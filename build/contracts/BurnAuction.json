@@ -14873,10 +14873,61 @@
       "links": {},
       "address": "0x88Fb372c3D3d84921a182eb29025B9417D84001E",
       "transactionHash": "0xa6a72cf40a811ad945090ecd11f911dbf6c51b6a6124ab257d847830209ba4e8"
+    },
+    "1597918161275": {
+      "events": {
+        "0xad7686a5b734ffdd6bec25115930a417bc3983037ea535f5066f92bd0aa1de7f": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "uint32",
+              "name": "slot",
+              "type": "uint32"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "amount",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "sumtotalFees",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "targetProfit",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "Coordinator",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "string",
+              "name": "url",
+              "type": "string"
+            }
+          ],
+          "name": "currentBestBid",
+          "type": "event",
+          "signature": "0xad7686a5b734ffdd6bec25115930a417bc3983037ea535f5066f92bd0aa1de7f"
+        }
+      },
+      "links": {},
+      "address": "0x8DbC93bf9B9887354AA5108bE96ae0b2DdE28032",
+      "transactionHash": "0xe097f72703211b08f857ec05e17c7efa76bf804f9c40e2cefcf610661d2585b7"
     }
   },
   "schemaVersion": "3.0.18",
-  "updatedAt": "2020-08-19T03:15:50.170Z",
+  "updatedAt": "2020-08-20T12:23:19.461Z",
   "networkType": "ethereum",
   "devdoc": {
     "methods": {
