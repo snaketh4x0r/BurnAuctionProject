@@ -2,6 +2,7 @@ import * as chai from "chai";
 import { ethers } from "ethers";
 const truffleAssert = require("truffle-assertions");
 const BurnAuction = artifacts.require("BurnAuction");
+import { BurnAuctionContract } from "../types/truffle-contracts/index";
 
 //local ganache url
 let url = "http://127.0.0.1:8545";

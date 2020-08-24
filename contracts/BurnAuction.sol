@@ -22,6 +22,8 @@ contract BurnAuction {
     address payable burnAddress;
     // Minimum bid to enter the auction
     uint256 public minBid;
+    // Min next bid percentage
+    uint256 public minNextbid;
     // Default Coordinator
     // will have to decide if we want to keep default Coordinator or not
     Coordinator public coDefault;
@@ -96,6 +98,7 @@ contract BurnAuction {
         uint256 _delayGenesis,
         uint256 _minBid,
         uint256 _minNextSlots,
+        uint256 _minNextbid,
         address payable coReturnAddress,
         address coSubmitBatchAddress,
         string memory coUrl
@@ -107,6 +110,7 @@ contract BurnAuction {
         delayGenesis = _delayGenesis;
         minBid = _minBid;
         minNextSlots = _minNextSlots;
+        minNextbid = _minNextbid;
         coDefault = Coordinator(coReturnAddress, coSubmitBatchAddress, coUrl);
     }
 
@@ -123,23 +127,16 @@ contract BurnAuction {
         uint256 value
     ) internal returns (uint256) {
         uint256 burnBid = 0;
-        uint256 amount = _sumtotalFees + _targetProfit;
-        //require checks
-        require(value >= amount, "Ether sent not enough");
         if (slotBid[slot].initialized) {
+            uint nextBid = slotBid[slot].
             require(
-                _sumtotalFees >= slotBid[slot].sumtotalFees,
+                value >= slotBid[slot].bidamount + (slotBid[slot].bidamount*minNextbid),
                 "include more txns"
             );
-            require(
-                _targetProfit < slotBid[slot].targetProfit,
-                "take less profits"
-            );
-            // should we refund previous bidder?
-            //problem as burnbid = sumofallfees-targetprofit as in spec
+            // refund previous bidder
         } else {
             //amount greater than minBid
-            require(amount >= minBid, "bid not enough than minimum bid");
+            require(value >= minBid, "bid not enough than minimum bid");
             slotBid[slot].initialized = true;
         }
         slotWinner[slot] = co;
