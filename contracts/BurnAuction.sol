@@ -25,7 +25,6 @@ contract BurnAuction {
     // Min next bid percentage
     uint256 public minNextbid;
     // Default Coordinator
-    // will have to decide if we want to keep default Coordinator or not
     Coordinator public coDefault;
 
     // Coordinator structure
@@ -40,23 +39,10 @@ contract BurnAuction {
 
     // bid structure
     struct Bid {
-        // bid amount = sumtotalFees + targetProfit
+        // bid amount(onchain) = sumtotalFees + targetProfit(offchain)
         uint256 amount;
         // used to indicate active auction for slot
         bool initialized;
-        // profit per auction slot by Coordinator
-        uint256 targetProfit;
-        // sum of fees of all transactions included in slot
-        uint256 sumtotalFees;
-    }
-
-    //might be removed
-    // information of slot structure
-    struct InfoSlot {
-        // current price of slot
-        uint256 slotPrice;
-        // current max target profit on slot
-        uint256 maxtargetProfit;
     }
 
     // Mappings
@@ -64,8 +50,6 @@ contract BurnAuction {
     mapping(uint256 => Coordinator) public slotWinner;
     // mapping to control bid by slot
     mapping(uint256 => Bid) public slotBid;
-    // mapping to control information of slot
-    mapping(uint256 => InfoSlot) public infoSlot;
 
     // events
     /**
@@ -74,8 +58,6 @@ contract BurnAuction {
     event currentBestBid(
         uint32 slot,
         uint256 amount,
-        uint256 sumtotalFees,
-        uint256 targetProfit,
         address Coordinator,
         string url
     );
@@ -122,61 +104,42 @@ contract BurnAuction {
     function bid(
         uint32 slot,
         Coordinator memory co,
-        uint256 _sumtotalFees,
-        uint256 _targetProfit,
-        uint256 value
+        uint256 _value
     ) internal returns (uint256) {
         uint256 burnBid = 0;
+        uint256 value = _value;
         if (slotBid[slot].initialized) {
-            uint nextBid = slotBid[slot].
+            uint256 nextBid = slotBid[slot].amount + (slotBid[slot].amount * minNextbid)/100;
             require(
-                value >= slotBid[slot].bidamount + (slotBid[slot].bidamount*minNextbid),
-                "include more txns"
+                value >= nextBid,
+                "bid not enough to outbid current bidder"
             );
             // refund previous bidder
+            // update burn amount
         } else {
-            //amount greater than minBid
+            // value should be greater than or equal to minBid
             require(value >= minBid, "bid not enough than minimum bid");
             slotBid[slot].initialized = true;
+            burnBid = value;
         }
+        // update slot winner
         slotWinner[slot] = co;
-        // update bid info for slot
-        slotBid[slot].amount = amount;
-        slotBid[slot].sumtotalFees = _sumtotalFees;
-        slotBid[slot].targetProfit = _targetProfit;
-        //update infoSlot
-        infoSlot[slot].maxtargetProfit = _targetProfit;
-        // update burnBid amount
-        //since hubble has no fees currently
-        //sumtotalfees can be 0
-        //will be removed once hubble has fees
-        //will have to account for sumtotalFees less than _targetProfit but greator than 0 case
-        //ask barry if there should be min txns in block ?-will remove zero sumtotalFees case
-        if (_sumtotalFees == 0) {
-            burnBid = _targetProfit;
-        } else {
-            burnBid = _sumtotalFees - _targetProfit;
-        }
-        //emit event
+        // update slot price
+        slotBid[slot].amount = value;
+        // emit event
         emit currentBestBid(
             slot,
             slotBid[slot].amount,
-            slotBid[slot].sumtotalFees,
-            slotBid[slot].targetProfit,
             co.returnAddress,
             co.url
         );
         return burnBid;
     }
 
-    //complete them-done
-
     //function by which coordinator bids for himself
     function bidBySelf(
         uint32 _slot,
         string calldata _url,
-        uint256 _targetProfit,
-        uint256 _sumtotalFees
     ) external payable {
         require(
             _slot >= currentSlot() + minNextSlots,
@@ -186,8 +149,6 @@ contract BurnAuction {
         uint256 burnBid = bid(
             _slot,
             co,
-            _targetProfit,
-            _sumtotalFees,
             msg.value
         );
         burnAddress.transfer(burnBid);
@@ -196,8 +157,6 @@ contract BurnAuction {
     //coordinator bids using others address arguments
     function bidForOthers(
         uint32 _slot,
-        uint256 _targetProfit,
-        uint256 _sumtotalFees,
         address payable _returnAddress,
         address _submitBatchAddress,
         string calldata _url
@@ -214,8 +173,6 @@ contract BurnAuction {
         uint256 burnBid = bid(
             _slot,
             co,
-            _targetProfit,
-            _sumtotalFees,
             msg.value
         );
         burnAddress.transfer(burnBid);
@@ -226,7 +183,7 @@ contract BurnAuction {
      * @dev Retrieve slot winner
      * @return submitBatchAddress,returnAddress,Coordinator url,bidamount
      */
-    function getWinner(uint256 _slot)
+    function getWinner(uint32 _slot)
         external
         view
         returns (
@@ -238,10 +195,10 @@ contract BurnAuction {
     {
         address batchSubmitter = slotWinner[_slot].submitBatchAddress;
         if (batchSubmitter != address(0x00)) {
-            uint256 amount = slotBid[_slot].amount;
             address winner = slotWinner[_slot].submitBatchAddress;
             address beneficiary = slotWinner[_slot].returnAddress;
             string memory url = slotWinner[_slot].url;
+            uint256 amount = slotBid[_slot].amount;
             return (winner, beneficiary, url, amount);
         } else {
             return (
@@ -266,8 +223,32 @@ contract BurnAuction {
             return false;
         }
     }
+    
+    function getCurrentWinner() external view returns ( address,
+            address,
+            string memory,
+            uint256
+        ) {
+        address winner;
+        address beneficiary;
+        string memory url;
+        uint256 amount;
 
-    //helper functions
+        (winner, beneficiary, url, amount) = getWinner(currentSlot());
+        
+        if(winner != address(0x00)) {
+        return (winner, beneficiary, url, amount);
+        } else {
+            return (
+                coDefault.submitBatchAddress,
+                coDefault.returnAddress,
+                coDefault.url,
+                0
+            );
+        }
+        }
+
+    // helper functions
     /**
      * @dev Retrieve block number
      * @return current block number
