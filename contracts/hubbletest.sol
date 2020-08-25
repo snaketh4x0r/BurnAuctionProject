@@ -17,7 +17,7 @@ contract hubbletest {
     }
 
     // verify sum of all txns fees and match with slot sum of all fess?
-    function submitBatch(uint256 _slot) external payable returns (bool) {
+    function submitBatch(uint32 _slot) external payable returns (bool) {
         address returnAdd;
         address submitter;
         string memory url;

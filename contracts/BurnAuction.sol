@@ -1,12 +1,16 @@
 pragma solidity ^0.5.15;
 
+import { SafeMath } from "@openzeppelin/contracts/math/SafeMath.sol";
+
 contract BurnAuction {
+    using SafeMath for uint256;
+    
     // 1 next 1.3 bonus 10 1.3 10 0.13  1.3-1-0.13=burned
     // discuss if you want to incentivize early bidders for slots using bonus-skip for now
     // discuss need for default Coordinator-keep it-done
     // discuss need to prevent submit batches multiple times after knowing hubble architecture--handled in rollup.sol if required
     // todo use safemath
-    // todo make uint types explicit
+    // todo make uint types explicit-done
 
     // number of blocks available in slot
     uint32 public blocksPerSlot;
@@ -101,6 +105,14 @@ contract BurnAuction {
 
     // todo improve this logic,fix bugs
     //pricing logic needs improvement,will come back here after writing few tests
+    
+    /**
+     * @dev Retrieve ether amount to be burned
+     * @param slot slot number
+     * @param co coordinator instance
+     * @param _value amount of ether sent
+     * @return  burn amount
+     */
     function bid(
         uint32 slot,
         Coordinator memory co,
@@ -109,13 +121,16 @@ contract BurnAuction {
         uint256 burnBid = 0;
         uint256 value = _value;
         if (slotBid[slot].initialized) {
-            uint256 nextBid = slotBid[slot].amount + (slotBid[slot].amount * minNextbid)/100;
+            uint256 nextBid = (slotBid[slot].amount).add((slotBid[slot].amount.mul(minNextbid)).div(100));
             require(
                 value >= nextBid,
                 "bid not enough to outbid current bidder"
             );
             // refund previous bidder
+            address payable previousBidder = slotWinner[slot].returnAddress;
+            previousBidder.transfer(slotBid[slot].amount);
             // update burn amount
+            burnBid = value.sub(slotBid[slot].amount);
         } else {
             // value should be greater than or equal to minBid
             require(value >= minBid, "bid not enough than minimum bid");
@@ -137,9 +152,15 @@ contract BurnAuction {
     }
 
     //function by which coordinator bids for himself
+    
+    /**
+     * @dev bid for self
+     * @param _slot slot number
+     * @param _url Coordinator url
+     */
     function bidBySelf(
         uint32 _slot,
-        string calldata _url,
+        string calldata _url
     ) external payable {
         require(
             _slot >= currentSlot() + minNextSlots,
@@ -155,6 +176,14 @@ contract BurnAuction {
     }
 
     //coordinator bids using others address arguments
+    
+    /**
+     * @dev bid for others using different address arguments
+     * @param _slot slot number
+     * @param _returnAddress address to return funds
+     * @param _submitBatchAddress address to submit batch from
+     * @param _url Coordinator url
+     */
     function bidForOthers(
         uint32 _slot,
         address payable _returnAddress,
@@ -179,12 +208,64 @@ contract BurnAuction {
     }
 
     // function needs to be exposed-done
+    
+    /**
+     * @dev Retrieve the current slot winner address
+     * @return submitBatchAddress,returnAddress,Coordinator url,bidprice
+     */
+    function getCurrentWinner() external view returns ( address,
+            address,
+            string memory,
+            uint256
+        ) {
+        address winner;
+        address beneficiary;
+        string memory url;
+        uint256 amount;
+
+        (winner, beneficiary, url, amount) = getWinner(currentSlot());
+        
+        if(winner != address(0x00)) {
+        return (winner, beneficiary, url, amount);
+        } else {
+            return (
+                coDefault.submitBatchAddress,
+                coDefault.returnAddress,
+                coDefault.url,
+                0
+            );
+        }
+        }
+        
+    /**
+     * @dev check if given address winner of slot or not
+     * @param _slot slot number
+     * @param _winner winer address to be checked
+     * @return bool
+     */
+    function checkWinner(uint256 _slot, address _winner)
+        external
+        view
+        returns (bool)
+    {
+        if (coDefault.submitBatchAddress == _winner) return true;
+        address coordinator = slotWinner[_slot].submitBatchAddress;
+        if (coordinator == _winner) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // helper functions
+    
     /**
      * @dev Retrieve slot winner
-     * @return submitBatchAddress,returnAddress,Coordinator url,bidamount
+     * @param _slot slot number
+     * @return submitBatchAddress,returnAddress,Coordinator url,bidprice
      */
     function getWinner(uint32 _slot)
-        external
+        public
         view
         returns (
             address,
@@ -209,46 +290,7 @@ contract BurnAuction {
             );
         }
     }
-
-    function checkWinner(uint256 _slot, address _winner)
-        external
-        view
-        returns (bool)
-    {
-        if (coDefault.submitBatchAddress == _winner) return true;
-        address coordinator = slotWinner[_slot].submitBatchAddress;
-        if (coordinator == _winner) {
-            return true;
-        } else {
-            return false;
-        }
-    }
     
-    function getCurrentWinner() external view returns ( address,
-            address,
-            string memory,
-            uint256
-        ) {
-        address winner;
-        address beneficiary;
-        string memory url;
-        uint256 amount;
-
-        (winner, beneficiary, url, amount) = getWinner(currentSlot());
-        
-        if(winner != address(0x00)) {
-        return (winner, beneficiary, url, amount);
-        } else {
-            return (
-                coDefault.submitBatchAddress,
-                coDefault.returnAddress,
-                coDefault.url,
-                0
-            );
-        }
-        }
-
-    // helper functions
     /**
      * @dev Retrieve block number
      * @return current block number
