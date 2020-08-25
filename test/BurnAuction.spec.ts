@@ -17,7 +17,13 @@ contract("BurnAuction", async function(accounts) {
 	let CoordinatorB: any;
 	let CoordinatorC: any;
 	let blocknumber: number;
-	//const delay:number = 100;
+	const blocksperslot: number = 100;
+	const maxtx: number = 100;
+	const minbid: number = 10000000000;;
+	const minnextslot: number = 2;
+	const minnextbid: number = 30;
+	const delay: number = 0;
+	//const delay:number = 100; 
 	
 	before(async function() {
 		//burnAuctionInstance = await BurnAuction.deployed();
@@ -34,22 +40,39 @@ contract("BurnAuction", async function(accounts) {
 		assert(burnAuctionInstance.address !== '');
 	});
 	
-	//complete after logic updates
+	// test initially for one auction condition then expand between multiple bidders
+	
 	/*
-	it('should ', async function() {
+	it('should fail bidding on current slot', async function() {
+		burnAuctionInstance = await BurnAuction.deployed();
+		assert();
+	});
+	
+	it('should fail bidding on slot next to current slot', async function() {
+		burnAuctionInstance = await BurnAuction.deployed();
+		assert();
+	});
+	
+	it('should bid succesfully on two slots ahead of current slot', async function() {
 		burnAuctionInstance = await BurnAuction.deployed();		
 		assert();
 	});
-	
-	it('should ', async function() {
+		
+	it('should bid three slots ahead', async function() {
 		burnAuctionInstance = await BurnAuction.deployed();
 		assert();
 	});
 	
-	it('should ', async function() {
+	// add more
+	
+	// multiple bidders
+	it('should outbid previous bidder succesfully two slots ahead of current slot', async function() {
 		burnAuctionInstance = await BurnAuction.deployed();
 		assert();
 	});
+	
+	// add more
+	
 	*/
 	
 	it('should get current blocknumber', async function() {	
@@ -109,8 +132,8 @@ contract("BurnAuction", async function(accounts) {
 		let currentslot = await burnAuctionInstance.currentSlot();
 		let result = burnAuctionInstance.getBlockBySlot(currentslot);
 		let valueToCompare = currentslot.toNumber() * blocksperslot.toNumber() + genesisblock.toNumber();
-		console.log(valueToCompare);
-		console.log(result.toNumber());
+		//console.log(valueToCompare);
+		//console.log(result.toNumber());
 		assert( result.toNumber() === valueToCompare );
 	});
 	
