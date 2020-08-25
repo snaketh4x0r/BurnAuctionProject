@@ -9,11 +9,11 @@ import {BurnAuction} from "./BurnAuction.sol";
 contract hubbletest {
     //external contracts
     BurnAuction public burnAuction;
-    
-    // in rollup there is contract address 
+
+    // in rollup there is contract address
     // after deployment of contracts register with registry
     constructor(address _burnauction) public {
-    burnAuction = BurnAuction(_burnauction);
+        burnAuction = BurnAuction(_burnauction);
     }
 
     // verify sum of all txns fees and match with slot sum of all fess?

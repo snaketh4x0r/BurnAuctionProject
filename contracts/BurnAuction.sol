@@ -1,16 +1,9 @@
 pragma solidity ^0.5.15;
 
-import { SafeMath } from "@openzeppelin/contracts/math/SafeMath.sol";
+import {SafeMath} from "@openzeppelin/contracts/math/SafeMath.sol";
 
 contract BurnAuction {
     using SafeMath for uint256;
-    
-    // 1 next 1.3 bonus 10 1.3 10 0.13  1.3-1-0.13=burned
-    // discuss if you want to incentivize early bidders for slots using bonus-skip for now
-    // discuss need for default Coordinator-keep it-done
-    // discuss need to prevent submit batches multiple times after knowing hubble architecture--handled in rollup.sol if required
-    // todo use safemath
-    // todo make uint types explicit-done
 
     // number of blocks available in slot
     uint32 public blocksPerSlot;
@@ -49,13 +42,11 @@ contract BurnAuction {
         bool initialized;
     }
 
-    // Mappings
     // mapping to control winner of slot
     mapping(uint256 => Coordinator) public slotWinner;
     // mapping to control bid by slot
     mapping(uint256 => Bid) public slotBid;
 
-    // events
     /**
      * @dev Event called when an Coordinator beat the current best bid of an ongoing auction
      */
@@ -66,7 +57,6 @@ contract BurnAuction {
         string url
     );
 
-    // todo move all governance parameters in Constructor-done
     /**
      * @dev BurnAuction Constructor
      * Set first block where the first slot begin
@@ -100,12 +90,6 @@ contract BurnAuction {
         coDefault = Coordinator(coReturnAddress, coSubmitBatchAddress, coUrl);
     }
 
-    // functions
-    // todo update with natspec comments
-
-    // todo improve this logic,fix bugs
-    //pricing logic needs improvement,will come back here after writing few tests
-    
     /**
      * @dev Retrieve ether amount to be burned
      * @param slot slot number
@@ -121,16 +105,19 @@ contract BurnAuction {
         uint256 burnBid = 0;
         uint256 value = _value;
         if (slotBid[slot].initialized) {
-            uint256 nextBid = (slotBid[slot].amount).add((slotBid[slot].amount.mul(minNextbid)).div(100));
+            uint256 previousBid = slotBid[slot].amount;
+            uint256 nextBid = previousBid.add(
+                (previousBid.mul(minNextbid)).div(100)
+            );
             require(
                 value >= nextBid,
                 "bid not enough to outbid current bidder"
             );
             // refund previous bidder
             address payable previousBidder = slotWinner[slot].returnAddress;
-            previousBidder.transfer(slotBid[slot].amount);
+            previousBidder.transfer(previousBid);
             // update burn amount
-            burnBid = value.sub(slotBid[slot].amount);
+            burnBid = value.sub(previousBid);
         } else {
             // value should be greater than or equal to minBid
             require(value >= minBid, "bid not enough than minimum bid");
@@ -151,32 +138,21 @@ contract BurnAuction {
         return burnBid;
     }
 
-    //function by which coordinator bids for himself
-    
     /**
      * @dev bid for self
      * @param _slot slot number
      * @param _url Coordinator url
      */
-    function bidBySelf(
-        uint32 _slot,
-        string calldata _url
-    ) external payable {
+    function bidBySelf(uint32 _slot, string calldata _url) external payable {
         require(
             _slot >= currentSlot() + minNextSlots,
             "This auction is already closed"
         );
         Coordinator memory co = Coordinator(msg.sender, msg.sender, _url);
-        uint256 burnBid = bid(
-            _slot,
-            co,
-            msg.value
-        );
+        uint256 burnBid = bid(_slot, co, msg.value);
         burnAddress.transfer(burnBid);
     }
 
-    //coordinator bids using others address arguments
-    
     /**
      * @dev bid for others using different address arguments
      * @param _slot slot number
@@ -199,34 +175,33 @@ contract BurnAuction {
             _submitBatchAddress,
             _url
         );
-        uint256 burnBid = bid(
-            _slot,
-            co,
-            msg.value
-        );
+        uint256 burnBid = bid(_slot, co, msg.value);
         burnAddress.transfer(burnBid);
     }
 
-    // function needs to be exposed-done
-    
     /**
      * @dev Retrieve the current slot winner address
      * @return submitBatchAddress,returnAddress,Coordinator url,bidprice
      */
-    function getCurrentWinner() external view returns ( address,
+    function getCurrentWinner()
+        external
+        view
+        returns (
+            address,
             address,
             string memory,
             uint256
-        ) {
+        )
+    {
         address winner;
         address beneficiary;
         string memory url;
         uint256 amount;
 
         (winner, beneficiary, url, amount) = getWinner(currentSlot());
-        
-        if(winner != address(0x00)) {
-        return (winner, beneficiary, url, amount);
+
+        if (winner != address(0x00)) {
+            return (winner, beneficiary, url, amount);
         } else {
             return (
                 coDefault.submitBatchAddress,
@@ -235,8 +210,8 @@ contract BurnAuction {
                 0
             );
         }
-        }
-        
+    }
+
     /**
      * @dev check if given address winner of slot or not
      * @param _slot slot number
@@ -257,8 +232,6 @@ contract BurnAuction {
         }
     }
 
-    // helper functions
-    
     /**
      * @dev Retrieve slot winner
      * @param _slot slot number
@@ -290,7 +263,7 @@ contract BurnAuction {
             );
         }
     }
-    
+
     /**
      * @dev Retrieve block number
      * @return current block number
