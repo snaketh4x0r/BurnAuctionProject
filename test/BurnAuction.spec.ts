@@ -9,7 +9,6 @@ let url = "http://127.0.0.1:8545";
 const provider = new ethers.providers.JsonRpcProvider(url);
 //console.log(provider);
 
-//contract tests
 contract("BurnAuction", async function(accounts) {
 	
 	let burnAuctionInstance: any;
@@ -19,7 +18,7 @@ contract("BurnAuction", async function(accounts) {
 	let blocknumber: number;
 	const blocksperslot: number = 100;
 	const maxtx: number = 100;
-	const minbid: number = 10000000000;;
+	const minbid: number = 10000000000;
 	const minnextslot: number = 2;
 	const minnextbid: number = 30;
 	const delay: number = 0;

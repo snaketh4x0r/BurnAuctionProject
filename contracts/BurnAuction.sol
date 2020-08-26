@@ -1,6 +1,6 @@
 pragma solidity ^0.5.15;
 
-import {SafeMath} from "@openzeppelin/contracts/math/SafeMath.sol";
+import { SafeMath } from "@openzeppelin/contracts/math/SafeMath.sol";
 
 contract BurnAuction {
     using SafeMath for uint256;
@@ -290,12 +290,4 @@ contract BurnAuction {
         return block2slot(getBlockNumber());
     }
 
-    /**
-     * @dev Retrieve the first block number for a given slot
-     * @param slot slot number
-     * @return block number
-     */
-    function getBlockBySlot(uint32 slot) public view returns (uint256) {
-        return (genesisBlock + slot * blocksPerSlot);
-    }
 }
