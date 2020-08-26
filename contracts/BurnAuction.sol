@@ -143,7 +143,7 @@ contract BurnAuction {
      * @param _slot slot number
      * @param _url Coordinator url
      */
-    function bidBySelf(uint32 _slot, string calldata _url) external payable {
+    function bidBySelf(uint32 _slot, string calldata _url) external payable returns (bool)  {
         require(
             _slot >= currentSlot() + minNextSlots,
             "This auction is already closed"
@@ -151,6 +151,7 @@ contract BurnAuction {
         Coordinator memory co = Coordinator(msg.sender, msg.sender, _url);
         uint256 burnBid = bid(_slot, co, msg.value);
         burnAddress.transfer(burnBid);
+        return true;
     }
 
     /**
@@ -165,7 +166,7 @@ contract BurnAuction {
         address payable _returnAddress,
         address _submitBatchAddress,
         string calldata _url
-    ) external payable {
+    ) external payable returns (bool) {
         require(
             _slot >= currentSlot() + minNextSlots,
             "This auction is already closed"
@@ -177,6 +178,7 @@ contract BurnAuction {
         );
         uint256 burnBid = bid(_slot, co, msg.value);
         burnAddress.transfer(burnBid);
+        return true;
     }
 
     /**
