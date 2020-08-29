@@ -1,6 +1,6 @@
 pragma solidity ^0.5.15;
 
-import { SafeMath } from "@openzeppelin/contracts/math/SafeMath.sol";
+import {SafeMath} from "@openzeppelin/contracts/math/SafeMath.sol";
 
 contract BurnAuction {
     using SafeMath for uint256;
@@ -143,7 +143,11 @@ contract BurnAuction {
      * @param _slot slot number
      * @param _url Coordinator url
      */
-    function bidBySelf(uint32 _slot, string calldata _url) external payable returns (bool)  {
+    function bidBySelf(uint32 _slot, string calldata _url)
+        external
+        payable
+        returns (bool)
+    {
         require(
             _slot >= currentSlot() + minNextSlots,
             "This auction is already closed"
@@ -225,7 +229,7 @@ contract BurnAuction {
         view
         returns (bool)
     {
-        if (coDefault.submitBatchAddress == _winner) return true;
+        if (slotBid[_slot].initialized != true && coDefault.submitBatchAddress == _winner) return true;
         address coordinator = slotWinner[_slot].submitBatchAddress;
         if (coordinator == _winner) {
             return true;
@@ -291,5 +295,4 @@ contract BurnAuction {
     function currentSlot() public view returns (uint32) {
         return block2slot(getBlockNumber());
     }
-
 }

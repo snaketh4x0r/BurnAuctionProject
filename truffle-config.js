@@ -82,6 +82,7 @@ module.exports = {
 
   // Set default mocha options here, use special reporters etc.
   mocha: {
+      reporter: 'eth-gas-reporter'
     // timeout: 100000
   },
 
@@ -93,7 +94,7 @@ module.exports = {
        settings: {          // See the solidity docs for advice about optimization and evmVersion
        optimizer: {
          enabled: false,
-          runs: 200
+          runs: 1500
        },
         evmVersion: "byzantium"
        },
