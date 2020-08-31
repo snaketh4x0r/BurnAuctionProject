@@ -39,6 +39,7 @@
   "scripts": {
     "solc": "solcjs --abi ./contracts/BurnAuction.sol",
     "coverage": "truffle run coverage",
+    "burnauctionopcode": "truffle opcode BurnAuction",
     "test": "truffle test --compile-all",
     "generate": "truffle compile && typechain --target truffle './build/**/*.json'",
     "ganache": "ganache-cli -q --mnemonic 'clock radar mass judge dismiss just intact mind resemble fringe diary casino' --gasLimit 8000000 --gasPrice 0 -b 1 -e=10000",
