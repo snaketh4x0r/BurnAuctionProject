@@ -16,12 +16,9 @@ contract hubbletest {
 
     // verify sum of all txns fees and match with slot sum of all fess?
     function submitBatch() external payable returns (bool) {
-        address returnAdd;
         address submitter;
-        string memory url;
-        uint256 amt;
 
-        (submitter, returnAdd, url, amt) = burnAuction.getCurrentWinner();
+        (submitter) = burnAuction.getCurrentWinner();
         require(msg.sender == submitter, "Coordinator didn't won slot");
         return true;
     }

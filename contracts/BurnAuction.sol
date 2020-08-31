@@ -7,6 +7,10 @@ contract BurnAuction {
 
     // number of blocks available in slot
     uint32 public blocksPerSlot;
+    // Burn Address
+    address payable burnAddress;
+    // Default Coordinator
+    Coordinator public coDefault;
     // number of blocks after contract deployment for genesisBlock number
     uint256 public delayGenesis;
     // First block where the first slot begins
@@ -15,23 +19,15 @@ contract BurnAuction {
     uint256 public maxTx;
     // Min differance between currentslot and auction slots
     uint256 public minNextSlots;
-    // Burn Address
-    address payable burnAddress;
     // Minimum bid to enter the auction
     uint256 public minBid;
     // Min next bid percentage
     uint256 public minNextbid;
-    // Default Coordinator
-    Coordinator public coDefault;
 
     // Coordinator structure
     struct Coordinator {
-        // address to return unsuccessful bid funds back
-        address payable returnAddress;
-        // Coordinator address having right to submit batch
-        address submitBatchAddress;
-        // Coordinator url
-        string url;
+        // Coordinator Address
+        address payable coordinatorAddress;
     }
 
     // bid structure
@@ -53,8 +49,7 @@ contract BurnAuction {
     event currentBestBid(
         uint32 slot,
         uint256 amount,
-        address Coordinator,
-        string url
+        address Coordinator
     );
 
     /**
@@ -75,9 +70,7 @@ contract BurnAuction {
         uint256 _minBid,
         uint256 _minNextSlots,
         uint256 _minNextbid,
-        address payable coReturnAddress,
-        address coSubmitBatchAddress,
-        string memory coUrl
+        address payable defaultCoAddress
     ) public {
         genesisBlock = getBlockNumber() + _delayGenesis;
         maxTx = _maxTx;
@@ -87,7 +80,7 @@ contract BurnAuction {
         minBid = _minBid;
         minNextSlots = _minNextSlots;
         minNextbid = _minNextbid;
-        coDefault = Coordinator(coReturnAddress, coSubmitBatchAddress, coUrl);
+        coDefault = Coordinator(defaultCoAddress);
     }
 
     /**
@@ -114,7 +107,7 @@ contract BurnAuction {
                 "bid not enough to outbid current bidder"
             );
             // refund previous bidder
-            address payable previousBidder = slotWinner[slot].returnAddress;
+            address payable previousBidder = slotWinner[slot].coordinatorAddress;
             previousBidder.transfer(previousBid);
             // update burn amount
             burnBid = value.sub(previousBid);
@@ -132,8 +125,7 @@ contract BurnAuction {
         emit currentBestBid(
             slot,
             slotBid[slot].amount,
-            co.returnAddress,
-            co.url
+            co.coordinatorAddress
         );
         return burnBid;
     }
@@ -141,9 +133,8 @@ contract BurnAuction {
     /**
      * @dev bid for self
      * @param _slot slot number
-     * @param _url Coordinator url
      */
-    function bidBySelf(uint32 _slot, string calldata _url)
+    function bidBySelf(uint32 _slot)
         external
         payable
         returns (bool)
@@ -152,7 +143,7 @@ contract BurnAuction {
             _slot >= currentSlot() + minNextSlots,
             "This auction is already closed"
         );
-        Coordinator memory co = Coordinator(msg.sender, msg.sender, _url);
+        Coordinator memory co = Coordinator(msg.sender);
         uint256 burnBid = bid(_slot, co, msg.value);
         burnAddress.transfer(burnBid);
         return true;
@@ -161,24 +152,18 @@ contract BurnAuction {
     /**
      * @dev bid for others using different address arguments
      * @param _slot slot number
-     * @param _returnAddress address to return funds
-     * @param _submitBatchAddress address to submit batch from
-     * @param _url Coordinator url
+     * @param _coordinatorAddress coordinator address of others
      */
     function bidForOthers(
         uint32 _slot,
-        address payable _returnAddress,
-        address _submitBatchAddress,
-        string calldata _url
+        address payable _coordinatorAddress
     ) external payable returns (bool) {
         require(
             _slot >= currentSlot() + minNextSlots,
             "This auction is already closed"
         );
         Coordinator memory co = Coordinator(
-            _returnAddress,
-            _submitBatchAddress,
-            _url
+            _coordinatorAddress
         );
         uint256 burnBid = bid(_slot, co, msg.value);
         burnAddress.transfer(burnBid);
@@ -186,98 +171,27 @@ contract BurnAuction {
     }
 
     /**
-     * @dev Retrieve the current slot winner address
+     * @dev Retrieve slot winner
      * @return submitBatchAddress,returnAddress,Coordinator url,bidprice
      */
     function getCurrentWinner()
-        external
-        view
-        returns (
-            address,
-            address,
-            string memory,
-            uint256
-        )
-    {
-        address winner;
-        address beneficiary;
-        string memory url;
-        uint256 amount;
-
-        (winner, beneficiary, url, amount) = getWinner(currentSlot());
-
-        if (winner != address(0x00)) {
-            return (winner, beneficiary, url, amount);
-        } else {
-            return (
-                coDefault.submitBatchAddress,
-                coDefault.returnAddress,
-                coDefault.url,
-                0
-            );
-        }
-    }
-
-    /**
-     * @dev check if given address winner of slot or not
-     * @param _slot slot number
-     * @param _winner winer address to be checked
-     * @return bool
-     */
-    function checkWinner(uint256 _slot, address _winner)
-        external
-        view
-        returns (bool)
-    {
-        if (slotBid[_slot].initialized != true && coDefault.submitBatchAddress == _winner) return true;
-        address coordinator = slotWinner[_slot].submitBatchAddress;
-        if (coordinator == _winner) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    /**
-     * @dev Retrieve slot winner
-     * @param _slot slot number
-     * @return submitBatchAddress,returnAddress,Coordinator url,bidprice
-     */
-    function getWinner(uint32 _slot)
         public
         view
         returns (
-            address,
-            address,
-            string memory,
-            uint256
+            address
         )
-    {
-        address batchSubmitter = slotWinner[_slot].submitBatchAddress;
+    {   
+        uint32 querySlot = currentSlot();
+        address batchSubmitter = slotWinner[querySlot].coordinatorAddress;
         if (batchSubmitter != address(0x00)) {
-            address winner = slotWinner[_slot].submitBatchAddress;
-            address beneficiary = slotWinner[_slot].returnAddress;
-            string memory url = slotWinner[_slot].url;
-            uint256 amount = slotBid[_slot].amount;
-            return (winner, beneficiary, url, amount);
+            return (batchSubmitter);
         } else {
             return (
-                coDefault.submitBatchAddress,
-                coDefault.returnAddress,
-                coDefault.url,
-                0
+                coDefault.coordinatorAddress
             );
         }
     }
-
-    /**
-     * @dev Retrieve block number
-     * @return current block number
-     */
-    function getBlockNumber() public view returns (uint256) {
-        return block.number;
-    }
-
+    
     /**
      * @dev Calculate slot from block number
      * @param numBlock block number
@@ -287,12 +201,40 @@ contract BurnAuction {
         if (numBlock < genesisBlock) return 0;
         return uint32((numBlock - genesisBlock) / (blocksPerSlot));
     }
-
+    
     /**
      * @dev Retrieve current slot
      * @return slot number
      */
     function currentSlot() public view returns (uint32) {
         return block2slot(getBlockNumber());
+    }
+
+    /**
+     * @dev Retrieve block number
+     * @return current block number
+     */
+    function getBlockNumber() public view returns (uint256) {
+        return block.number;
+    }
+    
+    /**
+     * @dev check if given address winner of slot or not
+     * @param _slot slot number
+     * @param _winner winer address to be checked
+     * @return bool
+     */
+    function checkWinner(uint256 _slot, address _winner)
+        public
+        view
+        returns (bool)
+    {
+        if (slotBid[_slot].initialized != true && coDefault.coordinatorAddress == _winner) return true;
+        address coordinator = slotWinner[_slot].coordinatorAddress;
+        if (coordinator == _winner) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

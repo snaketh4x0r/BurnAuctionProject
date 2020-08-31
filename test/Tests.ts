@@ -27,9 +27,7 @@ contract("BurnAuction", async function(accounts) {
 	const delay: number = 0;
 	const url: string = "hellocord.com";
 	//const delay:number = 100;
-    	
-	// unit tests written in ts instead of sol or saving time
-	
+    		
 	before(async function() {
 		//wallets = walletHelper.generateFirstWallets(walletHelper.mnemonics, 10);
 		burnAuctionInstance = await BurnAuction.deployed();
@@ -50,7 +48,7 @@ contract("BurnAuction", async function(accounts) {
 	it('should not bid on current slot by self', async function() {
 		try{
 		let currentslot = await burnAuctionInstance.currentSlot();
-		await burnAuctionInstance.bidBySelf(currentslot,url,{from: accounts[0],value:minbid});
+		await burnAuctionInstance.bidBySelf(currentslot,{from: accounts[0],value:minbid});
 		} catch(e) {
 			assert(e.message.includes('This auction is already closed'));
 			return;
@@ -62,7 +60,7 @@ contract("BurnAuction", async function(accounts) {
 		try{
 		let currentslot = await burnAuctionInstance.currentSlot();
 		let slottoBid = currentslot.toNumber() + 1;
-		await burnAuctionInstance.bidBySelf(slottoBid,url,{from: accounts[0],value:minbid});
+		await burnAuctionInstance.bidBySelf(slottoBid,{from: accounts[0],value:minbid});
 		} catch(e) {
 			assert(e.message.includes('This auction is already closed'));
 			return;
@@ -73,7 +71,7 @@ contract("BurnAuction", async function(accounts) {
 	it('should bid sucessfully on first auction slot by self', async function() {
 		let currentslot = await burnAuctionInstance.currentSlot();
 		let slottoBid = currentslot.toNumber() + 2;
-		let tx = await burnAuctionInstance.bidBySelf(slottoBid,url,{from: accounts[0],value:minbid});
+		let tx = await burnAuctionInstance.bidBySelf(slottoBid,{from: accounts[0],value:minbid});
 		//console.log(tx);
 		let bid = await burnAuctionInstance.slotBid(slottoBid);
 		//console.log((bid[0]).toNumber());
@@ -90,7 +88,7 @@ contract("BurnAuction", async function(accounts) {
 	it('should bid sucessfully on one slot ahead of auction slot by self', async function() {
 		let currentslot = await burnAuctionInstance.currentSlot();
 		let slottoBid = currentslot.toNumber() + 3;
-		let tx = await burnAuctionInstance.bidBySelf(slottoBid,url,{from: accounts[0],value:minbid});
+		let tx = await burnAuctionInstance.bidBySelf(slottoBid,{from: accounts[0],value:minbid});
 		let bid = await burnAuctionInstance.slotBid(slottoBid);
 		truffleAssert.eventEmitted(tx,'currentBestBid');
 		assert( bid[1] === true );
@@ -101,13 +99,12 @@ contract("BurnAuction", async function(accounts) {
 		let randomNo = randNo(4,10);
 		let currentslot = await burnAuctionInstance.currentSlot();
 		let slottoBid = currentslot.toNumber() + randomNo;
-		let tx = await burnAuctionInstance.bidBySelf(slottoBid,url,{from: accounts[0],value:minbid});
+		let tx = await burnAuctionInstance.bidBySelf(slottoBid,{from: accounts[0],value:minbid});
 		let bid = await burnAuctionInstance.slotBid(slottoBid);
 		truffleAssert.eventEmitted(tx,'currentBestBid');
 		assert( bid[1] === true );
 		assert( (bid[0]).toNumber() === minbid );
 	});
-	
 	
 	it('should overbid succesfully by self', async function() {
 		let currentslot = await burnAuctionInstance.currentSlot();
@@ -119,12 +116,16 @@ contract("BurnAuction", async function(accounts) {
 		let nextbidamount = prevbidamount + ((prevbidamount*minnextbid)/100);
 		//console.log(nextbidamount);
 		// outbid by account 1 for self as it has bid by account0 in previous tests
-		let tx1 = await burnAuctionInstance.bidBySelf(slottoBid,url,{from: accounts[1],value:nextbidamount});
+		let tx1 = await burnAuctionInstance.bidBySelf(slottoBid,{from: accounts[1],value:nextbidamount});
 		let bid = await burnAuctionInstance.slotBid(slottoBid);
 		let winner = await burnAuctionInstance.slotWinner(slottoBid);
+		//console.log(winner);
+		// no need for this as Coordinator struct only has one address now
+		//let checkwinneraddr = (winner[0]);
+		//console.log(checkwinneraddr);
+		// check overbidder as successful bid winner
 		// check winner as account 1
-		let checkwinneraddr = (winner[0]).toString();
-		assert( checkwinneraddr === accounts[1] );
+		assert( winner === accounts[1] );
 		// check auction stays in active stage
 		assert( bid[1] === true );
 		// check auctioned slot amount changed as over bid amount
@@ -148,7 +149,7 @@ contract("BurnAuction", async function(accounts) {
 		try{
 		let currentslot = await burnAuctionInstance.currentSlot();
 		//console.log(currentslot.toNumber());
-		await burnAuctionInstance.bidForOthers(currentslot,returnaddr,subaddr,url,{from: accounts[0],value:minbid});
+		await burnAuctionInstance.bidForOthers(currentslot,subaddr,{from: accounts[0],value:minbid});
 		} catch(e) {
 			assert(e.message.includes('This auction is already closed'));
 			return;
@@ -162,7 +163,7 @@ contract("BurnAuction", async function(accounts) {
 		try{
 		let currentslot = await burnAuctionInstance.currentSlot();
 		let slottoBid = currentslot.toNumber() + 1;
-		await burnAuctionInstance.bidForOthers(slottoBid,returnaddr,subaddr,url,{from: accounts[0],value:minbid});
+		await burnAuctionInstance.bidForOthers(slottoBid,subaddr,{from: accounts[0],value:minbid});
 		} catch(e) {
 			assert(e.message.includes('This auction is already closed'));
 			return;
@@ -177,7 +178,7 @@ contract("BurnAuction", async function(accounts) {
 		// ideally skipslots and then test 
 		// update once skipblock issue is solved
 		let slottoBid = currentslot.toNumber() + 12;
-		let tx = await burnAuctionInstance.bidForOthers(slottoBid,returnaddr,subaddr,url,{from: accounts[0],value:minbid});
+		let tx = await burnAuctionInstance.bidForOthers(slottoBid,subaddr,{from: accounts[0],value:minbid});
 		let bid = await burnAuctionInstance.slotBid(slottoBid);
 		truffleAssert.eventEmitted(tx,'currentBestBid');
 		assert( bid[1] === true );
@@ -189,7 +190,7 @@ contract("BurnAuction", async function(accounts) {
 		let subaddr = accounts[2];
 		let currentslot = await burnAuctionInstance.currentSlot();
 		let slottoBid = currentslot.toNumber() + 13;
-		let tx = await burnAuctionInstance.bidForOthers(slottoBid,returnaddr,subaddr,url,{from: accounts[0],value:minbid});
+		let tx = await burnAuctionInstance.bidForOthers(slottoBid,subaddr,{from: accounts[0],value:minbid});
 		let bid = await burnAuctionInstance.slotBid(slottoBid);
 		truffleAssert.eventEmitted(tx,'currentBestBid');
 		assert( bid[1] === true );
@@ -202,13 +203,13 @@ contract("BurnAuction", async function(accounts) {
 		let currentslot = await burnAuctionInstance.currentSlot();
 		let randomNo = randNo(14,20);
 		let slottoBid = currentslot.toNumber() + randomNo;
-		let tx = await burnAuctionInstance.bidForOthers(slottoBid,returnaddr,subaddr,url,{from: accounts[0],value:minbid});
+		let tx = await burnAuctionInstance.bidForOthers(slottoBid,subaddr,{from: accounts[0],value:minbid});
 		let bid = await burnAuctionInstance.slotBid(slottoBid);
 		truffleAssert.eventEmitted(tx,'currentBestBid');
 		assert( bid[1] === true );
 		assert( (bid[0]).toNumber() === minbid );
 	});
-	    	
+	   	
 	it('should overbid succesfully for others on first auction slot', async function() {
 		let currentslot = await burnAuctionInstance.currentSlot();
 		let slottoBid = currentslot.toNumber() + 12; 
@@ -217,14 +218,17 @@ contract("BurnAuction", async function(accounts) {
 		let previousbid = await burnAuctionInstance.slotBid(slottoBid);
         let prevbidamount = (previousbid[0]).toNumber();	
 		let nextbidamount = prevbidamount + ((prevbidamount*minnextbid)/100);
-		let tx = await burnAuctionInstance.bidForOthers(slottoBid,returnaddr,subaddr,url,{from: accounts[1],value:nextbidamount});
+		let tx = await burnAuctionInstance.bidForOthers(slottoBid,subaddr,{from: accounts[1],value:nextbidamount});
 		let bid = await burnAuctionInstance.slotBid(slottoBid);
 		let winner = await burnAuctionInstance.slotWinner(slottoBid);
 		let checkwinneraddr = (winner[0]).toString();
-		assert( checkwinneraddr === accounts[1] );
+		// accounts[1] bids for accounts[2] 
+		// so check accounts[2] as winner
+		assert( winner === accounts[2] );
 		assert( bid[1] === true );
 		assert( (bid[0]).toNumber() === nextbidamount );
 	});
+	
     
     // slots for testing different amount bid cases from 22-26	
 	it('should not bid with ether less than minbid for self', async function() {
@@ -232,7 +236,7 @@ contract("BurnAuction", async function(accounts) {
 		let currentslot = await burnAuctionInstance.currentSlot();
 		let slottoBid = currentslot.toNumber() + 22;
 		try {
-		await burnAuctionInstance.bidBySelf(slottoBid,url,{from: accounts[0],value:bidamount});
+		await burnAuctionInstance.bidBySelf(slottoBid,{from: accounts[0],value:bidamount});
 		} catch(e) {
 			assert(e.message.includes('bid not enough than minimum bid'));
 			return;
@@ -245,7 +249,7 @@ contract("BurnAuction", async function(accounts) {
 		let bidamount = minbid + 0;
 		let currentslot = await burnAuctionInstance.currentSlot();
 		let slottoBid = currentslot.toNumber() + 22;
-		let tx = await burnAuctionInstance.bidBySelf(slottoBid,url,{from: accounts[0],value:bidamount});
+		let tx = await burnAuctionInstance.bidBySelf(slottoBid,{from: accounts[0],value:bidamount});
 		let bid = await burnAuctionInstance.slotBid(slottoBid);
 		truffleAssert.eventEmitted(tx,'currentBestBid');
 		assert( bid[1] === true );
@@ -256,7 +260,7 @@ contract("BurnAuction", async function(accounts) {
 		let bidamount = minbid + 1;
 		let currentslot = await burnAuctionInstance.currentSlot();
 		let slottoBid = currentslot.toNumber() + 23;
-		let tx = await burnAuctionInstance.bidBySelf(slottoBid,url,{from: accounts[0],value:bidamount});
+		let tx = await burnAuctionInstance.bidBySelf(slottoBid,{from: accounts[0],value:bidamount});
 		let bid = await burnAuctionInstance.slotBid(slottoBid);
 		truffleAssert.eventEmitted(tx,'currentBestBid');
 		assert( bid[1] === true );
@@ -270,7 +274,7 @@ contract("BurnAuction", async function(accounts) {
 		let returnaddr = accounts[1];
 		let subaddr = accounts[2];
 		try {
-		await burnAuctionInstance.bidForOthers(slottoBid,returnaddr,subaddr,url,{from: accounts[0],value:bidamount});
+		await burnAuctionInstance.bidForOthers(slottoBid,subaddr,{from: accounts[0],value:bidamount});
 		} catch(e) {
 			assert(e.message.includes('bid not enough than minimum bid'));
 			return;
@@ -285,7 +289,7 @@ contract("BurnAuction", async function(accounts) {
 		let slottoBid = currentslot.toNumber() + 25;
 		let returnaddr = accounts[1];
 		let subaddr = accounts[2];
-		let tx = await burnAuctionInstance.bidForOthers(slottoBid,returnaddr,subaddr,url,{from: accounts[0],value:bidamount});
+		let tx = await burnAuctionInstance.bidForOthers(slottoBid,subaddr,{from: accounts[0],value:bidamount});
 		let bid = await burnAuctionInstance.slotBid(slottoBid);
 		truffleAssert.eventEmitted(tx,'currentBestBid');
 		assert( bid[1] === true );
@@ -298,7 +302,7 @@ contract("BurnAuction", async function(accounts) {
 		let slottoBid = currentslot.toNumber() + 26;
 		let returnaddr = accounts[1];
 		let subaddr = accounts[2];
-		let tx = await burnAuctionInstance.bidForOthers(slottoBid,returnaddr,subaddr,url,{from: accounts[0],value:bidamount});
+		let tx = await burnAuctionInstance.bidForOthers(slottoBid,subaddr,{from: accounts[0],value:bidamount});
 		let bid = await burnAuctionInstance.slotBid(slottoBid);
 		truffleAssert.eventEmitted(tx,'currentBestBid');
 		assert( bid[1] === true );
@@ -353,7 +357,7 @@ contract("HubbleTest", async function(accounts) {
 		let currentB = slotfi.toNumber();
 		// first bid 
 		let slottoBid = currentB + 2;
-		let bid = await burnAuctionInstance.bidBySelf(slottoBid,url,{from: accounts[0],value:minbid});	
+		let bid = await burnAuctionInstance.bidBySelf(slottoBid,{from: accounts[0],value:minbid});	
         // then skip to slot won
 		skiptoauctionslot();
 		let slotne = await burnAuctionInstance.currentSlot();

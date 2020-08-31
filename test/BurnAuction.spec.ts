@@ -59,7 +59,7 @@ contract("BurnAuction", async function(accounts) {
 		let currentslot = await burnAuctionInstance.currentSlot();
 		let slottoBid = currentslot.toNumber() + 3;
 		// make bid by coordinator a on first auction slot available
-		let tx1 = await burnAuctionInstance.bidBySelf(slottoBid,url,{from: accounts[1],value:minbid});
+		let tx1 = await burnAuctionInstance.bidBySelf(slottoBid,{from: accounts[1],value:minbid});
 		let bid1 = await burnAuctionInstance.slotBid(slottoBid);
 		// checks for bid by coordinator a successful or not
 		truffleAssert.eventEmitted(tx1,'currentBestBid');
@@ -80,7 +80,7 @@ contract("BurnAuction", async function(accounts) {
         let prevbidamount = (previousbid[0]).toNumber();
 		let nextbidamount = prevbidamount + ((prevbidamount*minnextbid)/100);
 		// overbid by coordinator b
-		let tx2 = await burnAuctionInstance.bidBySelf(slottoBid,url,{from: accounts[2],value:nextbidamount});
+		let tx2 = await burnAuctionInstance.bidBySelf(slottoBid,{from: accounts[2],value:nextbidamount});
 		// check tx2 succesful
 	    let tx2status = tx2.receipt.status;
 		assert( tx2status === true );
@@ -105,7 +105,7 @@ contract("BurnAuction", async function(accounts) {
 		let slottoBid = 4;
 		let returnaddrC = accounts[3];
 		let subaddrC = accounts[3];
-		let tx1 = await burnAuctionInstance.bidForOthers(slottoBid,returnaddrC,subaddrC,url,{from: accounts[3],value:minbid});
+		let tx1 = await burnAuctionInstance.bidForOthers(slottoBid,subaddrC,{from: accounts[3],value:minbid});
 		let bid1 = await burnAuctionInstance.slotBid(slottoBid);
 		// check tx1 succesful
 	    let tx1status = tx1.receipt.status;
