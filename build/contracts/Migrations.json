@@ -59,7 +59,7 @@
   "sourceMap": "66:345:1:-;;;164:56;8:9:-1;5:2;;;30:1;27;20:12;5:2;164:56:1;203:10;195:5;;:18;;;;;;;;;;;;;;;;;;66:345;;;;;;",
   "deployedSourceMap": "66:345:1:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;66:345:1;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;118:39;;;:::i;:::-;;;;;;;;;;;;;;;;;;;92:20;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;297:112;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;297:112:1;;;;;;;;;;;;;;;;;:::i;:::-;;118:39;;;;:::o;92:20::-;;;;;;;;;;;;;:::o;297:112::-;276:5;;;;;;;;;;;262:19;;:10;:19;;;258:26;;;393:9;366:24;:36;;;;258:26;297:112;:::o",
   "source": "// SPDX-License-Identifier: MIT\npragma solidity >=0.4.21 <0.7.0;\n\ncontract Migrations {\n    address public owner;\n    uint256 public last_completed_migration;\n\n    constructor() public {\n        owner = msg.sender;\n    }\n\n    modifier restricted() {\n        if (msg.sender == owner) _;\n    }\n\n    function setCompleted(uint256 completed) public restricted {\n        last_completed_migration = completed;\n    }\n}\n",
-  "sourcePath": "C:\\Users\\lazypuppet\\ethereum\\snaketh4x0r\\BurnAuctionProject\\contracts\\Migrations.sol",
+  "sourcePath": "C:/Users/lazypuppet/ethereum/snaketh4x0r/BurnAuctionProject/contracts/Migrations.sol",
   "ast": {
     "absolutePath": "/C/Users/lazypuppet/ethereum/snaketh4x0r/BurnAuctionProject/contracts/Migrations.sol",
     "exportedSymbols": {
@@ -887,15 +887,63 @@
     "version": "0.5.15+commit.6a57276f.Emscripten.clang"
   },
   "networks": {
-    "1597658044144": {
+    "1597772195543": {
       "events": {},
       "links": {},
-      "address": "0x7d33C8758E4C1f741c6E6507F8d7cEf294bE862C",
-      "transactionHash": "0x559c006b6764c60f1fe305f4bda95072b303c17fcbbee7bd10cac69b9d875966"
+      "address": "0x07Bd33DdE8d43B6FDf05d6240860aBCF204Ee776",
+      "transactionHash": "0x1809c40980036895e7650f7a63adefde46893833745cf52141ebda66b5fb0b34"
+    },
+    "1597804911869": {
+      "events": {},
+      "links": {},
+      "address": "0xac1E545Ad45B696882d8a6e88353daa4b0dEAaB9",
+      "transactionHash": "0x319ce30940bcd249b8e909ee89fd86379bb7712ce05b024d82643a8e78de3c06"
+    },
+    "1597805246303": {
+      "events": {},
+      "links": {},
+      "address": "0x819b211B13Fb2e17495577407dDBDb61d7BfD3e7",
+      "transactionHash": "0x8c4f5e8dee9dbd414a40c586643519ba6c63e29c54d2f0dfda079be0e085d999"
+    },
+    "1597806307064": {
+      "events": {},
+      "links": {},
+      "address": "0x435BeDE6C77ab96a0E0BEde42A128e9a41AA7367",
+      "transactionHash": "0x148a23d8fc642f1ace4347460fe0087b4de1cbb8a4d437ee9af0c6dae395ab8c"
+    },
+    "1597806882545": {
+      "events": {},
+      "links": {},
+      "address": "0x77A1061edA72b1775D5801ECF26bAa8e582b64C5",
+      "transactionHash": "0x0e78a5f2c91252a7786c961a971353ccb89ceb5110a1b6d15e08df0399ea93d1"
+    },
+    "1597918161275": {
+      "events": {},
+      "links": {},
+      "address": "0xf62785FE9F255E4113C75952955994B7600cc8eF",
+      "transactionHash": "0x0b15f3183ec5ff4d46dca6390fe307a903f1197a6ee166ce69067d54bd5b0802"
+    },
+    "1598380601500": {
+      "events": {},
+      "links": {},
+      "address": "0xcf6E0282c3E619e8bcC201e43312c18C2B919206",
+      "transactionHash": "0xcd01958c439d8e3f95c522256015b83ac197b4ecf948049e2051311d802c694e"
+    },
+    "1598868521998": {
+      "events": {},
+      "links": {},
+      "address": "0x435BeDE6C77ab96a0E0BEde42A128e9a41AA7367",
+      "transactionHash": "0x148a23d8fc642f1ace4347460fe0087b4de1cbb8a4d437ee9af0c6dae395ab8c"
+    },
+    "1599214404047": {
+      "events": {},
+      "links": {},
+      "address": "0x435BeDE6C77ab96a0E0BEde42A128e9a41AA7367",
+      "transactionHash": "0x148a23d8fc642f1ace4347460fe0087b4de1cbb8a4d437ee9af0c6dae395ab8c"
     }
   },
-  "schemaVersion": "3.1.0",
-  "updatedAt": "2020-08-17T11:17:27.443Z",
+  "schemaVersion": "3.0.18",
+  "updatedAt": "2020-09-04T10:14:10.229Z",
   "networkType": "ethereum",
   "devdoc": {
     "methods": {}

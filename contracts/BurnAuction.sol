@@ -1,15 +1,16 @@
 pragma solidity ^0.5.15;
 
+import {SafeMath} from "@openzeppelin/contracts/math/SafeMath.sol";
+
 contract BurnAuction {
-    // 1 next 1.3 bonus 10 1.3 10 0.13  1.3-1-0.13=burned
-    // discuss if you want to incentivize early bidders for slots using bonus-skip for now
-    // discuss need for default Coordinator-keep it-done
-    // discuss need to prevent submit batches multiple times after knowing hubble architecture--handled in rollup.sol if required
-    // todo use safemath
-    // todo make uint types explicit
+    using SafeMath for uint256;
 
     // number of blocks available in slot
     uint32 public blocksPerSlot;
+    // Burn Address
+    address payable burnAddress;
+    // Default Coordinator
+    Coordinator public coDefault;
     // number of blocks after contract deployment for genesisBlock number
     uint256 public delayGenesis;
     // First block where the first slot begins
@@ -18,67 +19,35 @@ contract BurnAuction {
     uint256 public maxTx;
     // Min differance between currentslot and auction slots
     uint256 public minNextSlots;
-    // Burn Address
-    address payable burnAddress;
     // Minimum bid to enter the auction
     uint256 public minBid;
-    // Default Coordinator
-    // will have to decide if we want to keep default Coordinator or not
-    Coordinator public coDefault;
+    // Min next bid percentage
+    uint256 public minNextbid;
 
     // Coordinator structure
     struct Coordinator {
-        // address to return unsuccessful bid funds back
-        address payable returnAddress;
-        // Coordinator address having right to submit batch
-        address submitBatchAddress;
-        // Coordinator url
-        string url;
+        // Coordinator Address
+        address payable coordinatorAddress;
     }
 
     // bid structure
     struct Bid {
-        // bid amount = sumtotalFees + targetProfit
+        // bid amount(onchain) = sumtotalFees + targetProfit(offchain)
         uint256 amount;
         // used to indicate active auction for slot
         bool initialized;
-        // profit per auction slot by Coordinator
-        uint256 targetProfit;
-        // sum of fees of all transactions included in slot
-        uint256 sumtotalFees;
     }
 
-    //might be removed
-    // information of slot structure
-    struct InfoSlot {
-        // current price of slot
-        uint256 slotPrice;
-        // current max target profit on slot
-        uint256 maxtargetProfit;
-    }
-
-    // Mappings
     // mapping to control winner of slot
     mapping(uint256 => Coordinator) public slotWinner;
     // mapping to control bid by slot
     mapping(uint256 => Bid) public slotBid;
-    // mapping to control information of slot
-    mapping(uint256 => InfoSlot) public infoSlot;
 
-    // events
     /**
      * @dev Event called when an Coordinator beat the current best bid of an ongoing auction
      */
-    event currentBestBid(
-        uint32 slot,
-        uint256 amount,
-        uint256 sumtotalFees,
-        uint256 targetProfit,
-        address Coordinator,
-        string url
-    );
+    event currentBestBid(uint32 slot, uint256 amount, address Coordinator);
 
-    // todo move all governance parameters in Constructor-done
     /**
      * @dev BurnAuction Constructor
      * Set first block where the first slot begin
@@ -96,9 +65,8 @@ contract BurnAuction {
         uint256 _delayGenesis,
         uint256 _minBid,
         uint256 _minNextSlots,
-        address payable coReturnAddress,
-        address coSubmitBatchAddress,
-        string memory coUrl
+        uint256 _minNextbid,
+        address payable defaultCoAddress
     ) public {
         genesisBlock = getBlockNumber() + _delayGenesis;
         maxTx = _maxTx;
@@ -107,176 +75,101 @@ contract BurnAuction {
         delayGenesis = _delayGenesis;
         minBid = _minBid;
         minNextSlots = _minNextSlots;
-        coDefault = Coordinator(coReturnAddress, coSubmitBatchAddress, coUrl);
+        minNextbid = _minNextbid;
+        coDefault = Coordinator(defaultCoAddress);
     }
 
-    // functions
-    // todo update with natspec comments
-
-    // todo improve this logic,fix bugs
-    //pricing logic needs improvement,will come back here after writing few tests
+    /**
+     * @dev Retrieve ether amount to be burned
+     * @param slot slot number
+     * @param co coordinator instance
+     * @param _value amount of ether sent
+     * @return  burn amount
+     */
     function bid(
         uint32 slot,
         Coordinator memory co,
-        uint256 _sumtotalFees,
-        uint256 _targetProfit,
-        uint256 value
+        uint256 _value
     ) internal returns (uint256) {
         uint256 burnBid = 0;
-        uint256 amount = _sumtotalFees + _targetProfit;
-        //require checks
-        require(value >= amount, "Ether sent not enough");
+        uint256 value = _value;
         if (slotBid[slot].initialized) {
-            require(
-                _sumtotalFees >= slotBid[slot].sumtotalFees,
-                "include more txns"
+            uint256 previousBid = slotBid[slot].amount;
+            uint256 nextBid = previousBid.add(
+                (previousBid.mul(minNextbid)).div(100)
             );
             require(
-                _targetProfit < slotBid[slot].targetProfit,
-                "take less profits"
+                value >= nextBid,
+                "bid not enough to outbid current bidder"
             );
-            // should we refund previous bidder?
-            //problem as burnbid = sumofallfees-targetprofit as in spec
+            // refund previous bidder
+            address payable previousBidder = slotWinner[slot]
+                .coordinatorAddress;
+            previousBidder.transfer(previousBid);
+            // update burn amount
+            burnBid = value.sub(previousBid);
         } else {
-            //amount greater than minBid
-            require(amount >= minBid, "bid not enough than minimum bid");
+            // value should be greater than or equal to minBid
+            require(value >= minBid, "bid not enough than minimum bid");
             slotBid[slot].initialized = true;
+            burnBid = value;
         }
+        // update slot winner
         slotWinner[slot] = co;
-        // update bid info for slot
-        slotBid[slot].amount = amount;
-        slotBid[slot].sumtotalFees = _sumtotalFees;
-        slotBid[slot].targetProfit = _targetProfit;
-        //update infoSlot
-        infoSlot[slot].maxtargetProfit = _targetProfit;
-        // update burnBid amount
-        //since hubble has no fees currently
-        //sumtotalfees can be 0
-        //will be removed once hubble has fees
-        //will have to account for sumtotalFees less than _targetProfit but greator than 0 case
-        //ask barry if there should be min txns in block ?-will remove zero sumtotalFees case
-        if (_sumtotalFees == 0) {
-            burnBid = _targetProfit;
-        } else {
-            burnBid = _sumtotalFees - _targetProfit;
-        }
-        //emit event
-        emit currentBestBid(
-            slot,
-            slotBid[slot].amount,
-            slotBid[slot].sumtotalFees,
-            slotBid[slot].targetProfit,
-            co.returnAddress,
-            co.url
-        );
+        // update slot price
+        slotBid[slot].amount = value;
+        // emit event
+        emit currentBestBid(slot, slotBid[slot].amount, co.coordinatorAddress);
         return burnBid;
     }
 
-    //complete them-done
-
-    //function by which coordinator bids for himself
-    function bidBySelf(
-        uint32 _slot,
-        string calldata _url,
-        uint256 _targetProfit,
-        uint256 _sumtotalFees
-    ) external payable {
-        require(
-            _slot >= currentSlot() + minNextSlots,
-            "This auction is already closed"
-        );
-        Coordinator memory co = Coordinator(msg.sender, msg.sender, _url);
-        uint256 burnBid = bid(
-            _slot,
-            co,
-            _targetProfit,
-            _sumtotalFees,
-            msg.value
-        );
-        burnAddress.transfer(burnBid);
-    }
-
-    //coordinator bids using others address arguments
-    function bidForOthers(
-        uint32 _slot,
-        uint256 _targetProfit,
-        uint256 _sumtotalFees,
-        address payable _returnAddress,
-        address _submitBatchAddress,
-        string calldata _url
-    ) external payable {
-        require(
-            _slot >= currentSlot() + minNextSlots,
-            "This auction is already closed"
-        );
-        Coordinator memory co = Coordinator(
-            _returnAddress,
-            _submitBatchAddress,
-            _url
-        );
-        uint256 burnBid = bid(
-            _slot,
-            co,
-            _targetProfit,
-            _sumtotalFees,
-            msg.value
-        );
-        burnAddress.transfer(burnBid);
-    }
-
-    // function needs to be exposed-done
     /**
-     * @dev Retrieve slot winner
-     * @return submitBatchAddress,returnAddress,Coordinator url,bidamount
+     * @dev bid for self
+     * @param _slot slot number
      */
-    function getWinner(uint256 _slot)
-        external
-        view
-        returns (
-            address,
-            address,
-            string memory,
-            uint256
-        )
-    {
-        address batchSubmitter = slotWinner[_slot].submitBatchAddress;
-        if (batchSubmitter != address(0x00)) {
-            uint256 amount = slotBid[_slot].amount;
-            address winner = slotWinner[_slot].submitBatchAddress;
-            address beneficiary = slotWinner[_slot].returnAddress;
-            string memory url = slotWinner[_slot].url;
-            return (winner, beneficiary, url, amount);
-        } else {
-            return (
-                coDefault.submitBatchAddress,
-                coDefault.returnAddress,
-                coDefault.url,
-                0
-            );
-        }
+    function bidBySelf(uint32 _slot) external payable returns (bool) {
+        require(
+            _slot >= currentSlot() + minNextSlots,
+            "This auction is already closed"
+        );
+        Coordinator memory co = Coordinator(msg.sender);
+        uint256 burnBid = bid(_slot, co, msg.value);
+        burnAddress.transfer(burnBid);
+        return true;
     }
 
-    function checkWinner(uint256 _slot, address _winner)
+    /**
+     * @dev bid for others using different address arguments
+     * @param _slot slot number
+     * @param _coordinatorAddress coordinator address of others
+     */
+    function bidForOthers(uint32 _slot, address payable _coordinatorAddress)
         external
-        view
+        payable
         returns (bool)
     {
-        if (coDefault.submitBatchAddress == _winner) return true;
-        address coordinator = slotWinner[_slot].submitBatchAddress;
-        if (coordinator == _winner) {
-            return true;
-        } else {
-            return false;
-        }
+        require(
+            _slot >= currentSlot() + minNextSlots,
+            "This auction is already closed"
+        );
+        Coordinator memory co = Coordinator(_coordinatorAddress);
+        uint256 burnBid = bid(_slot, co, msg.value);
+        burnAddress.transfer(burnBid);
+        return true;
     }
 
-    //helper functions
     /**
-     * @dev Retrieve block number
-     * @return current block number
+     * @dev Retrieve slot winner
+     * @return submitBatchAddress,returnAddress,Coordinator url,bidprice
      */
-    function getBlockNumber() public view returns (uint256) {
-        return block.number;
+    function getCurrentWinner() public view returns (address) {
+        uint32 querySlot = currentSlot();
+        address batchSubmitter = slotWinner[querySlot].coordinatorAddress;
+        if (batchSubmitter != address(0x00)) {
+            return (batchSubmitter);
+        } else {
+            return (coDefault.coordinatorAddress);
+        }
     }
 
     /**
@@ -298,11 +191,33 @@ contract BurnAuction {
     }
 
     /**
-     * @dev Retrieve the first block number for a given slot
-     * @param slot slot number
-     * @return block number
+     * @dev Retrieve block number
+     * @return current block number
      */
-    function getBlockBySlot(uint32 slot) public view returns (uint256) {
-        return (genesisBlock + slot * blocksPerSlot);
+    function getBlockNumber() public view returns (uint256) {
+        return block.number;
+    }
+
+    /**
+     * @dev check if given address winner of slot or not
+     * @param _slot slot number
+     * @param _winner winer address to be checked
+     * @return bool
+     */
+    function checkWinner(uint256 _slot, address _winner)
+        public
+        view
+        returns (bool)
+    {
+        if (
+            slotBid[_slot].initialized != true &&
+            coDefault.coordinatorAddress == _winner
+        ) return true;
+        address coordinator = slotWinner[_slot].coordinatorAddress;
+        if (coordinator == _winner) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
