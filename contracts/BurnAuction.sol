@@ -46,11 +46,7 @@ contract BurnAuction {
     /**
      * @dev Event called when an Coordinator beat the current best bid of an ongoing auction
      */
-    event currentBestBid(
-        uint32 slot,
-        uint256 amount,
-        address Coordinator
-    );
+    event currentBestBid(uint32 slot, uint256 amount, address Coordinator);
 
     /**
      * @dev BurnAuction Constructor
@@ -107,7 +103,8 @@ contract BurnAuction {
                 "bid not enough to outbid current bidder"
             );
             // refund previous bidder
-            address payable previousBidder = slotWinner[slot].coordinatorAddress;
+            address payable previousBidder = slotWinner[slot]
+                .coordinatorAddress;
             previousBidder.transfer(previousBid);
             // update burn amount
             burnBid = value.sub(previousBid);
@@ -122,11 +119,7 @@ contract BurnAuction {
         // update slot price
         slotBid[slot].amount = value;
         // emit event
-        emit currentBestBid(
-            slot,
-            slotBid[slot].amount,
-            co.coordinatorAddress
-        );
+        emit currentBestBid(slot, slotBid[slot].amount, co.coordinatorAddress);
         return burnBid;
     }
 
@@ -134,11 +127,7 @@ contract BurnAuction {
      * @dev bid for self
      * @param _slot slot number
      */
-    function bidBySelf(uint32 _slot)
-        external
-        payable
-        returns (bool)
-    {
+    function bidBySelf(uint32 _slot) external payable returns (bool) {
         require(
             _slot >= currentSlot() + minNextSlots,
             "This auction is already closed"
@@ -154,17 +143,16 @@ contract BurnAuction {
      * @param _slot slot number
      * @param _coordinatorAddress coordinator address of others
      */
-    function bidForOthers(
-        uint32 _slot,
-        address payable _coordinatorAddress
-    ) external payable returns (bool) {
+    function bidForOthers(uint32 _slot, address payable _coordinatorAddress)
+        external
+        payable
+        returns (bool)
+    {
         require(
             _slot >= currentSlot() + minNextSlots,
             "This auction is already closed"
         );
-        Coordinator memory co = Coordinator(
-            _coordinatorAddress
-        );
+        Coordinator memory co = Coordinator(_coordinatorAddress);
         uint256 burnBid = bid(_slot, co, msg.value);
         burnAddress.transfer(burnBid);
         return true;
@@ -174,24 +162,16 @@ contract BurnAuction {
      * @dev Retrieve slot winner
      * @return submitBatchAddress,returnAddress,Coordinator url,bidprice
      */
-    function getCurrentWinner()
-        public
-        view
-        returns (
-            address
-        )
-    {   
+    function getCurrentWinner() public view returns (address) {
         uint32 querySlot = currentSlot();
         address batchSubmitter = slotWinner[querySlot].coordinatorAddress;
         if (batchSubmitter != address(0x00)) {
             return (batchSubmitter);
         } else {
-            return (
-                coDefault.coordinatorAddress
-            );
+            return (coDefault.coordinatorAddress);
         }
     }
-    
+
     /**
      * @dev Calculate slot from block number
      * @param numBlock block number
@@ -201,7 +181,7 @@ contract BurnAuction {
         if (numBlock < genesisBlock) return 0;
         return uint32((numBlock - genesisBlock) / (blocksPerSlot));
     }
-    
+
     /**
      * @dev Retrieve current slot
      * @return slot number
@@ -217,7 +197,7 @@ contract BurnAuction {
     function getBlockNumber() public view returns (uint256) {
         return block.number;
     }
-    
+
     /**
      * @dev check if given address winner of slot or not
      * @param _slot slot number
@@ -229,7 +209,10 @@ contract BurnAuction {
         view
         returns (bool)
     {
-        if (slotBid[_slot].initialized != true && coDefault.coordinatorAddress == _winner) return true;
+        if (
+            slotBid[_slot].initialized != true &&
+            coDefault.coordinatorAddress == _winner
+        ) return true;
         address coordinator = slotWinner[_slot].coordinatorAddress;
         if (coordinator == _winner) {
             return true;

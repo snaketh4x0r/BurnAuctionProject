@@ -46,7 +46,7 @@
     "truffle": "truffle",
     "compile": "truffle compile",
     "migrate": "truffle migrate --reset",
-    "prettier": "prettier --write **/*.sol",
-    "lint": "prettier --check **/*.sol"
+    "prettier": "prettier --write \"**/*.{sol,ts}\"",
+    "lint": "prettier --check \"**/*.{sol,ts}\""
   }
 }
