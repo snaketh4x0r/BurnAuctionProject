@@ -51,11 +51,66 @@ https://github.com/snaketh4x0r/BurnAuctionProject
 ## project notes
 https://hackmd.io/ZwQWkWeeT1Ku65vI0ERJnw
 
+## Coverage reports
+https://gist.github.com/snaketh4x0r/730aa0a7f11062be11bcdef71785f450
+
 ## Installation
 
 **have truffle and ganache installed locally**
-**node >=12,truffle >= 5**
+**node == 10.13.0,truffle >= 5**
 1. git clone
 2. npm i
-3. start ganache and truffle compile && truffle migrate(or use npm run compile && npm run migrate)
-4. run tests with truffle tests
+3. npm run ganache
+4. in another terminal npm run migrate
+4. run tests with npm run test
+
+## File Structure
+
+burnauctionproject
+├── README.md
+├── build
+│   └── contracts
+│       ├── BurnAuction.json
+│       ├── Migrations.json
+│       ├── SafeMath.json
+│       └── hubbletest.json
+├── contracts
+│   ├── BurnAuction.sol
+│   ├── Migrations.sol
+│   └── hubbletest.sol
+├── coverage
+│   ├── base.css
+│   ├── contracts
+│   │   ├── BurnAuction.sol.html
+│   │   ├── hubbletest.sol.html
+│   │   └── index.html
+│   ├── coverage-final.json
+│   ├── index.html
+│   ├── lcov-report
+│   │   ├── base.css
+│   │   ├── contracts
+│   │   ├── index.html
+│   │   ├── prettify.css
+│   │   ├── prettify.js
+│   │   ├── sort-arrow-sprite.png
+│   │   └── sorter.js
+│   ├── lcov.info
+│   ├── prettify.css
+│   ├── prettify.js
+│   ├── sort-arrow-sprite.png
+│   └── sorter.js
+├── coverage.json
+├── migrations
+│   ├── 1_initial_migration.js
+│   └── 2_deploy_contracts.js
+├── package-lock.json
+├── package.json
+├── test
+│   ├── BurnAuction.spec.ts
+│   └── Tests.ts
+├── truffle-config.js
+├── tsconfig.json
+└── types
+    └── truffle-contracts
+        ├── index.d.ts
+        └── merge.d.ts
