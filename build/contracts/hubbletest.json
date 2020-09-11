@@ -44,21 +44,21 @@
       "type": "function"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.5.15+commit.6a57276f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_burnauction\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"constant\":true,\"inputs\":[],\"name\":\"burnAuction\",\"outputs\":[{\"internalType\":\"contract BurnAuction\",\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"submitBatch\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"payable\":true,\"stateMutability\":\"payable\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/mnt/c/Users/lazypuppet/ethereum/snaketh4x0r/burnauctionproject/contracts/hubbletest.sol\":\"hubbletest\"},\"evmVersion\":\"byzantium\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":2000},\"remappings\":[]},\"sources\":{\"/mnt/c/Users/lazypuppet/ethereum/snaketh4x0r/burnauctionproject/contracts/BurnAuction.sol\":{\"keccak256\":\"0xf1338f6da04d53bd2700b26a4f4ae3bc7635765ec7834e8e2603c212ff73e1c0\",\"urls\":[\"bzz-raw://969ca0a24c77a1cca415538f4e02542c8b5f7075139926bbebadf74d81792b25\",\"dweb:/ipfs/QmUosYc68XZNrFTnqDHT4CkK84Py1EMB5UwYgWWNMMFMzy\"]},\"/mnt/c/Users/lazypuppet/ethereum/snaketh4x0r/burnauctionproject/contracts/hubbletest.sol\":{\"keccak256\":\"0x9037f3a17ffe2a5bc4ebb251c74c6cf991c940eee90de019214fc6ba30588906\",\"urls\":[\"bzz-raw://7e5944f5e6dc170d5cb6312548f2f0f1da9398c9ba65d43eeb7edfc8e82fb8db\",\"dweb:/ipfs/QmNufT3QRo2EQ8Tgh66UpGe6KzY6zhxSbpKZEUgzshgezq\"]},\"@openzeppelin/contracts/math/SafeMath.sol\":{\"keccak256\":\"0x640b6dee7a4b830bdfd52b5031a07fc2b12209f5b2e29e5d364a7d37f69d8076\",\"urls\":[\"bzz-raw://31113152e1ddb78fe7a4197f247591ca894e93f916867beb708d8e747b6cc74f\",\"dweb:/ipfs/QmbZaJyXdpsYGykVhHH9qpVGQg9DGCxE2QufbCUy3daTgq\"]}},\"version\":1}",
-  "bytecode": "0x608060405234801561001057600080fd5b5060405161031e38038061031e8339818101604052602081101561003357600080fd5b8101908080519060200190929190505050806000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1602179055505061028a806100946000396000f3fe608060405260043610610046576000357c010000000000000000000000000000000000000000000000000000000090048063461153831461004b578063c9f0a02d1461006d575b600080fd5b6100536100c4565b604051808215151515815260200191505060405180910390f35b34801561007957600080fd5b50610082610230565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b6000806000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1663329bfc336040518163ffffffff167c010000000000000000000000000000000000000000000000000000000002815260040160206040518083038186803b15801561014a57600080fd5b505afa15801561015e573d6000803e3d6000fd5b505050506040513d602081101561017457600080fd5b810190808051906020019092919050505090508073ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614610228576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040180806020018281038252601b8152602001807f436f6f7264696e61746f72206469646e277420776f6e20736c6f74000000000081525060200191505060405180910390fd5b600191505090565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff168156fea265627a7a723158203f2eea1a2cbb995cb7c03db0db4ebfecb7ffc04d0ad2a727efbfc6ea87fd7e3064736f6c634300050f0032",
-  "deployedBytecode": "0x608060405260043610610046576000357c010000000000000000000000000000000000000000000000000000000090048063461153831461004b578063c9f0a02d1461006d575b600080fd5b6100536100c4565b604051808215151515815260200191505060405180910390f35b34801561007957600080fd5b50610082610230565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b6000806000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1663329bfc336040518163ffffffff167c010000000000000000000000000000000000000000000000000000000002815260040160206040518083038186803b15801561014a57600080fd5b505afa15801561015e573d6000803e3d6000fd5b505050506040513d602081101561017457600080fd5b810190808051906020019092919050505090508073ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614610228576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040180806020018281038252601b8152602001807f436f6f7264696e61746f72206469646e277420776f6e20736c6f74000000000081525060200191505060405180910390fd5b600191505090565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff168156fea265627a7a723158203f2eea1a2cbb995cb7c03db0db4ebfecb7ffc04d0ad2a727efbfc6ea87fd7e3064736f6c634300050f0032",
-  "sourceMap": "141:624:2:-;;;338:99;8:9:-1;5:2;;;30:1;27;20:12;5:2;338:99:2;;;;;;;;;;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;338:99:2;;;;;;;;;;;;;;;;416:12;390:11;;:39;;;;;;;;;;;;;;;;;;338:99;141:624;;;;;;",
-  "deployedSourceMap": "141:624:2:-;;;;;;;;;;;;;;;;;;;;;;;;;;;518:244;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;194:30;;8:9:-1;5:2;;;30:1;27;20:12;5:2;194:30:2;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;518:244;567:4;584:17;628:11;;;;;;;;;;;:28;;;:30;;;;;;;;;;;;;;;;;;;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;628:30:2;;;;8:9:-1;5:2;;;45:16;42:1;39;24:38;77:16;74:1;67:27;5:2;628:30:2;;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;628:30:2;;;;;;;;;;;;;;;;614:44;;691:9;677:23;;:10;:23;;;669:63;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;750:4;743:11;;;518:244;:::o;194:30::-;;;;;;;;;;;;;:::o",
-  "source": "pragma solidity ^0.5.15;\r\n\r\nimport {BurnAuction} from \"./BurnAuction.sol\";\r\n\r\n// contract just for testing and writing tests\r\n// rollup.sol\r\ncontract hubbletest {\r\n    //external contracts\r\n    BurnAuction public burnAuction;\r\n\r\n    // in rollup there is contract address\r\n    // after deployment of contracts register with registry\r\n    constructor(address _burnauction) public {\r\n        burnAuction = BurnAuction(_burnauction);\r\n    }\r\n\r\n    // verify sum of all txns fees and match with slot sum of all fess?\r\n    function submitBatch() external payable returns (bool) {\r\n        address submitter;\r\n\r\n        (submitter) = burnAuction.getCurrentWinner();\r\n        require(msg.sender == submitter, \"Coordinator didn't won slot\");\r\n        return true;\r\n    }\r\n}\r\n",
-  "sourcePath": "/mnt/c/Users/lazypuppet/ethereum/snaketh4x0r/burnauctionproject/contracts/hubbletest.sol",
+  "metadata": "{\"compiler\":{\"version\":\"0.5.15+commit.6a57276f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_burnauction\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"constant\":true,\"inputs\":[],\"name\":\"burnAuction\",\"outputs\":[{\"internalType\":\"contract BurnAuction\",\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"submitBatch\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"payable\":true,\"stateMutability\":\"payable\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/C/Users/lazypuppet/ethereum/snaketh4x0r/BurnAuctionProject/contracts/hubbletest.sol\":\"hubbletest\"},\"evmVersion\":\"byzantium\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":2000},\"remappings\":[]},\"sources\":{\"/C/Users/lazypuppet/ethereum/snaketh4x0r/BurnAuctionProject/contracts/BurnAuction.sol\":{\"keccak256\":\"0xf1338f6da04d53bd2700b26a4f4ae3bc7635765ec7834e8e2603c212ff73e1c0\",\"urls\":[\"bzz-raw://969ca0a24c77a1cca415538f4e02542c8b5f7075139926bbebadf74d81792b25\",\"dweb:/ipfs/QmUosYc68XZNrFTnqDHT4CkK84Py1EMB5UwYgWWNMMFMzy\"]},\"/C/Users/lazypuppet/ethereum/snaketh4x0r/BurnAuctionProject/contracts/hubbletest.sol\":{\"keccak256\":\"0x6bededecac96a470848ac1a12cb59d13fe4ddc2b76a91fc6fb6e95fb483aa170\",\"urls\":[\"bzz-raw://664f9d86f75455123a8489c3f182cfba51f405a9f819e7d33392da8685b9ed48\",\"dweb:/ipfs/QmT4WahyKyNA8NnnRc8qMWjFdTXENGos7xgPUCBc2PQYtu\"]},\"@openzeppelin/contracts/math/SafeMath.sol\":{\"keccak256\":\"0x640b6dee7a4b830bdfd52b5031a07fc2b12209f5b2e29e5d364a7d37f69d8076\",\"urls\":[\"bzz-raw://31113152e1ddb78fe7a4197f247591ca894e93f916867beb708d8e747b6cc74f\",\"dweb:/ipfs/QmbZaJyXdpsYGykVhHH9qpVGQg9DGCxE2QufbCUy3daTgq\"]}},\"version\":1}",
+  "bytecode": "0x608060405234801561001057600080fd5b5060405161031e38038061031e8339818101604052602081101561003357600080fd5b8101908080519060200190929190505050806000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1602179055505061028a806100946000396000f3fe608060405260043610610046576000357c010000000000000000000000000000000000000000000000000000000090048063461153831461004b578063c9f0a02d1461006d575b600080fd5b6100536100c4565b604051808215151515815260200191505060405180910390f35b34801561007957600080fd5b50610082610230565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b6000806000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1663329bfc336040518163ffffffff167c010000000000000000000000000000000000000000000000000000000002815260040160206040518083038186803b15801561014a57600080fd5b505afa15801561015e573d6000803e3d6000fd5b505050506040513d602081101561017457600080fd5b810190808051906020019092919050505090508073ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614610228576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040180806020018281038252601b8152602001807f436f6f7264696e61746f72206469646e277420776f6e20736c6f74000000000081525060200191505060405180910390fd5b600191505090565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff168156fea265627a7a72315820c40992249552ebfbba0f2c2793aa16985b19f2c6f8f3164df90e69a40803d6e764736f6c634300050f0032",
+  "deployedBytecode": "0x608060405260043610610046576000357c010000000000000000000000000000000000000000000000000000000090048063461153831461004b578063c9f0a02d1461006d575b600080fd5b6100536100c4565b604051808215151515815260200191505060405180910390f35b34801561007957600080fd5b50610082610230565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b6000806000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1663329bfc336040518163ffffffff167c010000000000000000000000000000000000000000000000000000000002815260040160206040518083038186803b15801561014a57600080fd5b505afa15801561015e573d6000803e3d6000fd5b505050506040513d602081101561017457600080fd5b810190808051906020019092919050505090508073ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614610228576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040180806020018281038252601b8152602001807f436f6f7264696e61746f72206469646e277420776f6e20736c6f74000000000081525060200191505060405180910390fd5b600191505090565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff168156fea265627a7a72315820c40992249552ebfbba0f2c2793aa16985b19f2c6f8f3164df90e69a40803d6e764736f6c634300050f0032",
+  "sourceMap": "141:707:2:-;;;564:99;8:9:-1;5:2;;;30:1;27;20:12;5:2;564:99:2;;;;;;;;;;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;564:99:2;;;;;;;;;;;;;;;;642:12;616:11;;:39;;;;;;;;;;;;;;;;;;564:99;141:707;;;;;;",
+  "deployedSourceMap": "141:707:2:-;;;;;;;;;;;;;;;;;;;;;;;;;;;744:101;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;194:30;;8:9:-1;5:2;;;30:1;27;20:12;5:2;194:30:2;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;744:101;809:4;276:17;319:11;;;;;;;;;;;:28;;;:30;;;;;;;;;;;;;;;;;;;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;319:30:2;;;;8:9:-1;5:2;;;45:16;42:1;39;24:38;77:16;74:1;67:27;5:2;319:30:2;;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;319:30:2;;;;;;;;;;;;;;;;305:44;;383:9;369:23;;:10;:23;;;361:63;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;833:4;826:11;;744:101;;:::o;194:30::-;;;;;;;;;;;;;:::o",
+  "source": "pragma solidity ^0.5.15;\r\n\r\nimport {BurnAuction} from \"./BurnAuction.sol\";\r\n\r\n// contract just for testing and writing tests\r\n// rollup.sol\r\ncontract hubbletest {\r\n    //external contracts\r\n    BurnAuction public burnAuction;\r\n    \r\n    modifier onlyCoordinator() {\r\n         address submitter;\r\n         (submitter) = burnAuction.getCurrentWinner();\r\n         require(msg.sender == submitter, \"Coordinator didn't won slot\");\r\n         _;\r\n    }\r\n    \r\n\r\n    // in rollup there is contract address\r\n    // after deployment of contracts register with registry\r\n    constructor(address _burnauction) public {\r\n        burnAuction = BurnAuction(_burnauction);\r\n    }\r\n\r\n    // verify sum of all txns fees and match with slot sum of all fess?\r\n    function submitBatch() external payable onlyCoordinator returns (bool) {\r\n        return true;\r\n    }\r\n}\r\n",
+  "sourcePath": "C:/Users/lazypuppet/ethereum/snaketh4x0r/BurnAuctionProject/contracts/hubbletest.sol",
   "ast": {
-    "absolutePath": "/mnt/c/Users/lazypuppet/ethereum/snaketh4x0r/burnauctionproject/contracts/hubbletest.sol",
+    "absolutePath": "/C/Users/lazypuppet/ethereum/snaketh4x0r/BurnAuctionProject/contracts/hubbletest.sol",
     "exportedSymbols": {
       "hubbletest": [
-        513
+        519
       ]
     },
-    "id": 514,
+    "id": 520,
     "nodeType": "SourceUnit",
     "nodes": [
       {
@@ -73,11 +73,11 @@
         "src": "0:24:2"
       },
       {
-        "absolutePath": "/mnt/c/Users/lazypuppet/ethereum/snaketh4x0r/burnauctionproject/contracts/BurnAuction.sol",
+        "absolutePath": "/C/Users/lazypuppet/ethereum/snaketh4x0r/BurnAuctionProject/contracts/BurnAuction.sol",
         "file": "./BurnAuction.sol",
         "id": 472,
         "nodeType": "ImportDirective",
-        "scope": 514,
+        "scope": 520,
         "sourceUnit": 432,
         "src": "28:46:2",
         "symbolAliases": [
@@ -94,9 +94,9 @@
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
-        "id": 513,
+        "id": 519,
         "linearizedBaseContracts": [
-          513
+          519
         ],
         "name": "hubbletest",
         "nodeType": "ContractDefinition",
@@ -106,7 +106,7 @@
             "id": 474,
             "name": "burnAuction",
             "nodeType": "VariableDeclaration",
-            "scope": 513,
+            "scope": 519,
             "src": "194:30:2",
             "stateVariable": true,
             "storageLocation": "default",
@@ -131,165 +131,22 @@
           },
           {
             "body": {
-              "id": 485,
+              "id": 495,
               "nodeType": "Block",
-              "src": "379:58:2",
-              "statements": [
-                {
-                  "expression": {
-                    "argumentTypes": null,
-                    "id": 483,
-                    "isConstant": false,
-                    "isLValue": false,
-                    "isPure": false,
-                    "lValueRequested": false,
-                    "leftHandSide": {
-                      "argumentTypes": null,
-                      "id": 479,
-                      "name": "burnAuction",
-                      "nodeType": "Identifier",
-                      "overloadedDeclarations": [],
-                      "referencedDeclaration": 474,
-                      "src": "390:11:2",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_BurnAuction_$431",
-                        "typeString": "contract BurnAuction"
-                      }
-                    },
-                    "nodeType": "Assignment",
-                    "operator": "=",
-                    "rightHandSide": {
-                      "argumentTypes": null,
-                      "arguments": [
-                        {
-                          "argumentTypes": null,
-                          "id": 481,
-                          "name": "_burnauction",
-                          "nodeType": "Identifier",
-                          "overloadedDeclarations": [],
-                          "referencedDeclaration": 476,
-                          "src": "416:12:2",
-                          "typeDescriptions": {
-                            "typeIdentifier": "t_address",
-                            "typeString": "address"
-                          }
-                        }
-                      ],
-                      "expression": {
-                        "argumentTypes": [
-                          {
-                            "typeIdentifier": "t_address",
-                            "typeString": "address"
-                          }
-                        ],
-                        "id": 480,
-                        "name": "BurnAuction",
-                        "nodeType": "Identifier",
-                        "overloadedDeclarations": [],
-                        "referencedDeclaration": 431,
-                        "src": "404:11:2",
-                        "typeDescriptions": {
-                          "typeIdentifier": "t_type$_t_contract$_BurnAuction_$431_$",
-                          "typeString": "type(contract BurnAuction)"
-                        }
-                      },
-                      "id": 482,
-                      "isConstant": false,
-                      "isLValue": false,
-                      "isPure": false,
-                      "kind": "typeConversion",
-                      "lValueRequested": false,
-                      "names": [],
-                      "nodeType": "FunctionCall",
-                      "src": "404:25:2",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_BurnAuction_$431",
-                        "typeString": "contract BurnAuction"
-                      }
-                    },
-                    "src": "390:39:2",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_BurnAuction_$431",
-                      "typeString": "contract BurnAuction"
-                    }
-                  },
-                  "id": 484,
-                  "nodeType": "ExpressionStatement",
-                  "src": "390:39:2"
-                }
-              ]
-            },
-            "documentation": null,
-            "id": 486,
-            "implemented": true,
-            "kind": "constructor",
-            "modifiers": [],
-            "name": "",
-            "nodeType": "FunctionDefinition",
-            "parameters": {
-              "id": 477,
-              "nodeType": "ParameterList",
-              "parameters": [
-                {
-                  "constant": false,
-                  "id": 476,
-                  "name": "_burnauction",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 486,
-                  "src": "350:20:2",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_address",
-                    "typeString": "address"
-                  },
-                  "typeName": {
-                    "id": 475,
-                    "name": "address",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "350:7:2",
-                    "stateMutability": "nonpayable",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_address",
-                      "typeString": "address"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                }
-              ],
-              "src": "349:22:2"
-            },
-            "returnParameters": {
-              "id": 478,
-              "nodeType": "ParameterList",
-              "parameters": [],
-              "src": "379:0:2"
-            },
-            "scope": 513,
-            "src": "338:99:2",
-            "stateMutability": "nonpayable",
-            "superFunction": null,
-            "visibility": "public"
-          },
-          {
-            "body": {
-              "id": 511,
-              "nodeType": "Block",
-              "src": "573:189:2",
+              "src": "264:181:2",
               "statements": [
                 {
                   "assignments": [
-                    492
+                    477
                   ],
                   "declarations": [
                     {
                       "constant": false,
-                      "id": 492,
+                      "id": 477,
                       "name": "submitter",
                       "nodeType": "VariableDeclaration",
-                      "scope": 511,
-                      "src": "584:17:2",
+                      "scope": 495,
+                      "src": "276:17:2",
                       "stateVariable": false,
                       "storageLocation": "default",
                       "typeDescriptions": {
@@ -297,10 +154,10 @@
                         "typeString": "address"
                       },
                       "typeName": {
-                        "id": 491,
+                        "id": 476,
                         "name": "address",
                         "nodeType": "ElementaryTypeName",
-                        "src": "584:7:2",
+                        "src": "276:7:2",
                         "stateMutability": "nonpayable",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
@@ -311,15 +168,15 @@
                       "visibility": "internal"
                     }
                   ],
-                  "id": 493,
+                  "id": 478,
                   "initialValue": null,
                   "nodeType": "VariableDeclarationStatement",
-                  "src": "584:17:2"
+                  "src": "276:17:2"
                 },
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 499,
+                    "id": 484,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -329,26 +186,26 @@
                       "components": [
                         {
                           "argumentTypes": null,
-                          "id": 494,
+                          "id": 479,
                           "name": "submitter",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 492,
-                          "src": "615:9:2",
+                          "referencedDeclaration": 477,
+                          "src": "306:9:2",
                           "typeDescriptions": {
                             "typeIdentifier": "t_address",
                             "typeString": "address"
                           }
                         }
                       ],
-                      "id": 495,
+                      "id": 480,
                       "isConstant": false,
                       "isInlineArray": false,
                       "isLValue": true,
                       "isPure": false,
                       "lValueRequested": true,
                       "nodeType": "TupleExpression",
-                      "src": "614:11:2",
+                      "src": "305:11:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_address",
                         "typeString": "address"
@@ -363,18 +220,18 @@
                         "argumentTypes": [],
                         "expression": {
                           "argumentTypes": null,
-                          "id": 496,
+                          "id": 481,
                           "name": "burnAuction",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
                           "referencedDeclaration": 474,
-                          "src": "628:11:2",
+                          "src": "319:11:2",
                           "typeDescriptions": {
                             "typeIdentifier": "t_contract$_BurnAuction_$431",
                             "typeString": "contract BurnAuction"
                           }
                         },
-                        "id": 497,
+                        "id": 482,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -382,13 +239,13 @@
                         "memberName": "getCurrentWinner",
                         "nodeType": "MemberAccess",
                         "referencedDeclaration": 345,
-                        "src": "628:28:2",
+                        "src": "319:28:2",
                         "typeDescriptions": {
                           "typeIdentifier": "t_function_external_view$__$returns$_t_address_$",
                           "typeString": "function () view external returns (address)"
                         }
                       },
-                      "id": 498,
+                      "id": 483,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -396,21 +253,21 @@
                       "lValueRequested": false,
                       "names": [],
                       "nodeType": "FunctionCall",
-                      "src": "628:30:2",
+                      "src": "319:30:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_address",
                         "typeString": "address"
                       }
                     },
-                    "src": "614:44:2",
+                    "src": "305:44:2",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
                     }
                   },
-                  "id": 500,
+                  "id": 485,
                   "nodeType": "ExpressionStatement",
-                  "src": "614:44:2"
+                  "src": "305:44:2"
                 },
                 {
                   "expression": {
@@ -422,7 +279,7 @@
                           "typeIdentifier": "t_address",
                           "typeString": "address"
                         },
-                        "id": 505,
+                        "id": 490,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -431,18 +288,18 @@
                           "argumentTypes": null,
                           "expression": {
                             "argumentTypes": null,
-                            "id": 502,
+                            "id": 487,
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 715,
-                            "src": "677:3:2",
+                            "referencedDeclaration": 721,
+                            "src": "369:3:2",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
                               "typeString": "msg"
                             }
                           },
-                          "id": 503,
+                          "id": 488,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -450,7 +307,7 @@
                           "memberName": "sender",
                           "nodeType": "MemberAccess",
                           "referencedDeclaration": null,
-                          "src": "677:10:2",
+                          "src": "369:10:2",
                           "typeDescriptions": {
                             "typeIdentifier": "t_address_payable",
                             "typeString": "address payable"
@@ -460,18 +317,18 @@
                         "operator": "==",
                         "rightExpression": {
                           "argumentTypes": null,
-                          "id": 504,
+                          "id": 489,
                           "name": "submitter",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 492,
-                          "src": "691:9:2",
+                          "referencedDeclaration": 477,
+                          "src": "383:9:2",
                           "typeDescriptions": {
                             "typeIdentifier": "t_address",
                             "typeString": "address"
                           }
                         },
-                        "src": "677:23:2",
+                        "src": "369:23:2",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bool",
                           "typeString": "bool"
@@ -480,14 +337,14 @@
                       {
                         "argumentTypes": null,
                         "hexValue": "436f6f7264696e61746f72206469646e277420776f6e20736c6f74",
-                        "id": 506,
+                        "id": 491,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
                         "kind": "string",
                         "lValueRequested": false,
                         "nodeType": "Literal",
-                        "src": "702:29:2",
+                        "src": "394:29:2",
                         "subdenomination": null,
                         "typeDescriptions": {
                           "typeIdentifier": "t_stringliteral_f0b2945ca1fe4238c41273c8f5bc42b2d5d85f6bf2450887077453a011a7e72c",
@@ -507,21 +364,21 @@
                           "typeString": "literal_string \"Coordinator didn't won slot\""
                         }
                       ],
-                      "id": 501,
+                      "id": 486,
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        718,
-                        719
+                        724,
+                        725
                       ],
-                      "referencedDeclaration": 719,
-                      "src": "669:7:2",
+                      "referencedDeclaration": 725,
+                      "src": "361:7:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
                         "typeString": "function (bool,string memory) pure"
                       }
                     },
-                    "id": 507,
+                    "id": 492,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -529,28 +386,197 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "669:63:2",
+                    "src": "361:63:2",
                     "typeDescriptions": {
                       "typeIdentifier": "t_tuple$__$",
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 508,
+                  "id": 493,
                   "nodeType": "ExpressionStatement",
-                  "src": "669:63:2"
+                  "src": "361:63:2"
                 },
+                {
+                  "id": 494,
+                  "nodeType": "PlaceholderStatement",
+                  "src": "436:1:2"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 496,
+            "name": "onlyCoordinator",
+            "nodeType": "ModifierDefinition",
+            "parameters": {
+              "id": 475,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "261:2:2"
+            },
+            "src": "237:208:2",
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 507,
+              "nodeType": "Block",
+              "src": "605:58:2",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 505,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 501,
+                      "name": "burnAuction",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 474,
+                      "src": "616:11:2",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_BurnAuction_$431",
+                        "typeString": "contract BurnAuction"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "arguments": [
+                        {
+                          "argumentTypes": null,
+                          "id": 503,
+                          "name": "_burnauction",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 498,
+                          "src": "642:12:2",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        }
+                      ],
+                      "expression": {
+                        "argumentTypes": [
+                          {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        ],
+                        "id": 502,
+                        "name": "BurnAuction",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 431,
+                        "src": "630:11:2",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_type$_t_contract$_BurnAuction_$431_$",
+                          "typeString": "type(contract BurnAuction)"
+                        }
+                      },
+                      "id": 504,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "kind": "typeConversion",
+                      "lValueRequested": false,
+                      "names": [],
+                      "nodeType": "FunctionCall",
+                      "src": "630:25:2",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_BurnAuction_$431",
+                        "typeString": "contract BurnAuction"
+                      }
+                    },
+                    "src": "616:39:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_BurnAuction_$431",
+                      "typeString": "contract BurnAuction"
+                    }
+                  },
+                  "id": 506,
+                  "nodeType": "ExpressionStatement",
+                  "src": "616:39:2"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 508,
+            "implemented": true,
+            "kind": "constructor",
+            "modifiers": [],
+            "name": "",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 499,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 498,
+                  "name": "_burnauction",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 508,
+                  "src": "576:20:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 497,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "576:7:2",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "575:22:2"
+            },
+            "returnParameters": {
+              "id": 500,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "605:0:2"
+            },
+            "scope": 519,
+            "src": "564:99:2",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 517,
+              "nodeType": "Block",
+              "src": "815:30:2",
+              "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
                     "hexValue": "74727565",
-                    "id": 509,
+                    "id": 515,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": true,
                     "kind": "bool",
                     "lValueRequested": false,
                     "nodeType": "Literal",
-                    "src": "750:4:2",
+                    "src": "833:4:2",
                     "subdenomination": null,
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
@@ -558,37 +584,57 @@
                     },
                     "value": "true"
                   },
-                  "functionReturnParameters": 490,
-                  "id": 510,
+                  "functionReturnParameters": 514,
+                  "id": 516,
                   "nodeType": "Return",
-                  "src": "743:11:2"
+                  "src": "826:11:2"
                 }
               ]
             },
             "documentation": null,
-            "id": 512,
+            "id": 518,
             "implemented": true,
             "kind": "function",
-            "modifiers": [],
+            "modifiers": [
+              {
+                "arguments": null,
+                "id": 511,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 510,
+                  "name": "onlyCoordinator",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 496,
+                  "src": "784:15:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$__$",
+                    "typeString": "modifier ()"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "784:15:2"
+              }
+            ],
             "name": "submitBatch",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 487,
+              "id": 509,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "538:2:2"
+              "src": "764:2:2"
             },
             "returnParameters": {
-              "id": 490,
+              "id": 514,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 489,
+                  "id": 513,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 512,
-                  "src": "567:4:2",
+                  "scope": 518,
+                  "src": "809:4:2",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -596,10 +642,10 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 488,
+                    "id": 512,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
-                    "src": "567:4:2",
+                    "src": "809:4:2",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
@@ -609,29 +655,29 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "566:6:2"
+              "src": "808:6:2"
             },
-            "scope": 513,
-            "src": "518:244:2",
+            "scope": 519,
+            "src": "744:101:2",
             "stateMutability": "payable",
             "superFunction": null,
             "visibility": "external"
           }
         ],
-        "scope": 514,
-        "src": "141:624:2"
+        "scope": 520,
+        "src": "141:707:2"
       }
     ],
-    "src": "0:767:2"
+    "src": "0:850:2"
   },
   "legacyAST": {
-    "absolutePath": "/mnt/c/Users/lazypuppet/ethereum/snaketh4x0r/burnauctionproject/contracts/hubbletest.sol",
+    "absolutePath": "/C/Users/lazypuppet/ethereum/snaketh4x0r/BurnAuctionProject/contracts/hubbletest.sol",
     "exportedSymbols": {
       "hubbletest": [
-        513
+        519
       ]
     },
-    "id": 514,
+    "id": 520,
     "nodeType": "SourceUnit",
     "nodes": [
       {
@@ -646,11 +692,11 @@
         "src": "0:24:2"
       },
       {
-        "absolutePath": "/mnt/c/Users/lazypuppet/ethereum/snaketh4x0r/burnauctionproject/contracts/BurnAuction.sol",
+        "absolutePath": "/C/Users/lazypuppet/ethereum/snaketh4x0r/BurnAuctionProject/contracts/BurnAuction.sol",
         "file": "./BurnAuction.sol",
         "id": 472,
         "nodeType": "ImportDirective",
-        "scope": 514,
+        "scope": 520,
         "sourceUnit": 432,
         "src": "28:46:2",
         "symbolAliases": [
@@ -667,9 +713,9 @@
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
-        "id": 513,
+        "id": 519,
         "linearizedBaseContracts": [
-          513
+          519
         ],
         "name": "hubbletest",
         "nodeType": "ContractDefinition",
@@ -679,7 +725,7 @@
             "id": 474,
             "name": "burnAuction",
             "nodeType": "VariableDeclaration",
-            "scope": 513,
+            "scope": 519,
             "src": "194:30:2",
             "stateVariable": true,
             "storageLocation": "default",
@@ -704,165 +750,22 @@
           },
           {
             "body": {
-              "id": 485,
+              "id": 495,
               "nodeType": "Block",
-              "src": "379:58:2",
-              "statements": [
-                {
-                  "expression": {
-                    "argumentTypes": null,
-                    "id": 483,
-                    "isConstant": false,
-                    "isLValue": false,
-                    "isPure": false,
-                    "lValueRequested": false,
-                    "leftHandSide": {
-                      "argumentTypes": null,
-                      "id": 479,
-                      "name": "burnAuction",
-                      "nodeType": "Identifier",
-                      "overloadedDeclarations": [],
-                      "referencedDeclaration": 474,
-                      "src": "390:11:2",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_BurnAuction_$431",
-                        "typeString": "contract BurnAuction"
-                      }
-                    },
-                    "nodeType": "Assignment",
-                    "operator": "=",
-                    "rightHandSide": {
-                      "argumentTypes": null,
-                      "arguments": [
-                        {
-                          "argumentTypes": null,
-                          "id": 481,
-                          "name": "_burnauction",
-                          "nodeType": "Identifier",
-                          "overloadedDeclarations": [],
-                          "referencedDeclaration": 476,
-                          "src": "416:12:2",
-                          "typeDescriptions": {
-                            "typeIdentifier": "t_address",
-                            "typeString": "address"
-                          }
-                        }
-                      ],
-                      "expression": {
-                        "argumentTypes": [
-                          {
-                            "typeIdentifier": "t_address",
-                            "typeString": "address"
-                          }
-                        ],
-                        "id": 480,
-                        "name": "BurnAuction",
-                        "nodeType": "Identifier",
-                        "overloadedDeclarations": [],
-                        "referencedDeclaration": 431,
-                        "src": "404:11:2",
-                        "typeDescriptions": {
-                          "typeIdentifier": "t_type$_t_contract$_BurnAuction_$431_$",
-                          "typeString": "type(contract BurnAuction)"
-                        }
-                      },
-                      "id": 482,
-                      "isConstant": false,
-                      "isLValue": false,
-                      "isPure": false,
-                      "kind": "typeConversion",
-                      "lValueRequested": false,
-                      "names": [],
-                      "nodeType": "FunctionCall",
-                      "src": "404:25:2",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_BurnAuction_$431",
-                        "typeString": "contract BurnAuction"
-                      }
-                    },
-                    "src": "390:39:2",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_BurnAuction_$431",
-                      "typeString": "contract BurnAuction"
-                    }
-                  },
-                  "id": 484,
-                  "nodeType": "ExpressionStatement",
-                  "src": "390:39:2"
-                }
-              ]
-            },
-            "documentation": null,
-            "id": 486,
-            "implemented": true,
-            "kind": "constructor",
-            "modifiers": [],
-            "name": "",
-            "nodeType": "FunctionDefinition",
-            "parameters": {
-              "id": 477,
-              "nodeType": "ParameterList",
-              "parameters": [
-                {
-                  "constant": false,
-                  "id": 476,
-                  "name": "_burnauction",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 486,
-                  "src": "350:20:2",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_address",
-                    "typeString": "address"
-                  },
-                  "typeName": {
-                    "id": 475,
-                    "name": "address",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "350:7:2",
-                    "stateMutability": "nonpayable",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_address",
-                      "typeString": "address"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                }
-              ],
-              "src": "349:22:2"
-            },
-            "returnParameters": {
-              "id": 478,
-              "nodeType": "ParameterList",
-              "parameters": [],
-              "src": "379:0:2"
-            },
-            "scope": 513,
-            "src": "338:99:2",
-            "stateMutability": "nonpayable",
-            "superFunction": null,
-            "visibility": "public"
-          },
-          {
-            "body": {
-              "id": 511,
-              "nodeType": "Block",
-              "src": "573:189:2",
+              "src": "264:181:2",
               "statements": [
                 {
                   "assignments": [
-                    492
+                    477
                   ],
                   "declarations": [
                     {
                       "constant": false,
-                      "id": 492,
+                      "id": 477,
                       "name": "submitter",
                       "nodeType": "VariableDeclaration",
-                      "scope": 511,
-                      "src": "584:17:2",
+                      "scope": 495,
+                      "src": "276:17:2",
                       "stateVariable": false,
                       "storageLocation": "default",
                       "typeDescriptions": {
@@ -870,10 +773,10 @@
                         "typeString": "address"
                       },
                       "typeName": {
-                        "id": 491,
+                        "id": 476,
                         "name": "address",
                         "nodeType": "ElementaryTypeName",
-                        "src": "584:7:2",
+                        "src": "276:7:2",
                         "stateMutability": "nonpayable",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
@@ -884,15 +787,15 @@
                       "visibility": "internal"
                     }
                   ],
-                  "id": 493,
+                  "id": 478,
                   "initialValue": null,
                   "nodeType": "VariableDeclarationStatement",
-                  "src": "584:17:2"
+                  "src": "276:17:2"
                 },
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 499,
+                    "id": 484,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -902,26 +805,26 @@
                       "components": [
                         {
                           "argumentTypes": null,
-                          "id": 494,
+                          "id": 479,
                           "name": "submitter",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 492,
-                          "src": "615:9:2",
+                          "referencedDeclaration": 477,
+                          "src": "306:9:2",
                           "typeDescriptions": {
                             "typeIdentifier": "t_address",
                             "typeString": "address"
                           }
                         }
                       ],
-                      "id": 495,
+                      "id": 480,
                       "isConstant": false,
                       "isInlineArray": false,
                       "isLValue": true,
                       "isPure": false,
                       "lValueRequested": true,
                       "nodeType": "TupleExpression",
-                      "src": "614:11:2",
+                      "src": "305:11:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_address",
                         "typeString": "address"
@@ -936,18 +839,18 @@
                         "argumentTypes": [],
                         "expression": {
                           "argumentTypes": null,
-                          "id": 496,
+                          "id": 481,
                           "name": "burnAuction",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
                           "referencedDeclaration": 474,
-                          "src": "628:11:2",
+                          "src": "319:11:2",
                           "typeDescriptions": {
                             "typeIdentifier": "t_contract$_BurnAuction_$431",
                             "typeString": "contract BurnAuction"
                           }
                         },
-                        "id": 497,
+                        "id": 482,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -955,13 +858,13 @@
                         "memberName": "getCurrentWinner",
                         "nodeType": "MemberAccess",
                         "referencedDeclaration": 345,
-                        "src": "628:28:2",
+                        "src": "319:28:2",
                         "typeDescriptions": {
                           "typeIdentifier": "t_function_external_view$__$returns$_t_address_$",
                           "typeString": "function () view external returns (address)"
                         }
                       },
-                      "id": 498,
+                      "id": 483,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -969,21 +872,21 @@
                       "lValueRequested": false,
                       "names": [],
                       "nodeType": "FunctionCall",
-                      "src": "628:30:2",
+                      "src": "319:30:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_address",
                         "typeString": "address"
                       }
                     },
-                    "src": "614:44:2",
+                    "src": "305:44:2",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
                     }
                   },
-                  "id": 500,
+                  "id": 485,
                   "nodeType": "ExpressionStatement",
-                  "src": "614:44:2"
+                  "src": "305:44:2"
                 },
                 {
                   "expression": {
@@ -995,7 +898,7 @@
                           "typeIdentifier": "t_address",
                           "typeString": "address"
                         },
-                        "id": 505,
+                        "id": 490,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -1004,18 +907,18 @@
                           "argumentTypes": null,
                           "expression": {
                             "argumentTypes": null,
-                            "id": 502,
+                            "id": 487,
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 715,
-                            "src": "677:3:2",
+                            "referencedDeclaration": 721,
+                            "src": "369:3:2",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
                               "typeString": "msg"
                             }
                           },
-                          "id": 503,
+                          "id": 488,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -1023,7 +926,7 @@
                           "memberName": "sender",
                           "nodeType": "MemberAccess",
                           "referencedDeclaration": null,
-                          "src": "677:10:2",
+                          "src": "369:10:2",
                           "typeDescriptions": {
                             "typeIdentifier": "t_address_payable",
                             "typeString": "address payable"
@@ -1033,18 +936,18 @@
                         "operator": "==",
                         "rightExpression": {
                           "argumentTypes": null,
-                          "id": 504,
+                          "id": 489,
                           "name": "submitter",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 492,
-                          "src": "691:9:2",
+                          "referencedDeclaration": 477,
+                          "src": "383:9:2",
                           "typeDescriptions": {
                             "typeIdentifier": "t_address",
                             "typeString": "address"
                           }
                         },
-                        "src": "677:23:2",
+                        "src": "369:23:2",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bool",
                           "typeString": "bool"
@@ -1053,14 +956,14 @@
                       {
                         "argumentTypes": null,
                         "hexValue": "436f6f7264696e61746f72206469646e277420776f6e20736c6f74",
-                        "id": 506,
+                        "id": 491,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
                         "kind": "string",
                         "lValueRequested": false,
                         "nodeType": "Literal",
-                        "src": "702:29:2",
+                        "src": "394:29:2",
                         "subdenomination": null,
                         "typeDescriptions": {
                           "typeIdentifier": "t_stringliteral_f0b2945ca1fe4238c41273c8f5bc42b2d5d85f6bf2450887077453a011a7e72c",
@@ -1080,21 +983,21 @@
                           "typeString": "literal_string \"Coordinator didn't won slot\""
                         }
                       ],
-                      "id": 501,
+                      "id": 486,
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        718,
-                        719
+                        724,
+                        725
                       ],
-                      "referencedDeclaration": 719,
-                      "src": "669:7:2",
+                      "referencedDeclaration": 725,
+                      "src": "361:7:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
                         "typeString": "function (bool,string memory) pure"
                       }
                     },
-                    "id": 507,
+                    "id": 492,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1102,28 +1005,197 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "669:63:2",
+                    "src": "361:63:2",
                     "typeDescriptions": {
                       "typeIdentifier": "t_tuple$__$",
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 508,
+                  "id": 493,
                   "nodeType": "ExpressionStatement",
-                  "src": "669:63:2"
+                  "src": "361:63:2"
                 },
+                {
+                  "id": 494,
+                  "nodeType": "PlaceholderStatement",
+                  "src": "436:1:2"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 496,
+            "name": "onlyCoordinator",
+            "nodeType": "ModifierDefinition",
+            "parameters": {
+              "id": 475,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "261:2:2"
+            },
+            "src": "237:208:2",
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 507,
+              "nodeType": "Block",
+              "src": "605:58:2",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 505,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 501,
+                      "name": "burnAuction",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 474,
+                      "src": "616:11:2",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_BurnAuction_$431",
+                        "typeString": "contract BurnAuction"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "arguments": [
+                        {
+                          "argumentTypes": null,
+                          "id": 503,
+                          "name": "_burnauction",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 498,
+                          "src": "642:12:2",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        }
+                      ],
+                      "expression": {
+                        "argumentTypes": [
+                          {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        ],
+                        "id": 502,
+                        "name": "BurnAuction",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 431,
+                        "src": "630:11:2",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_type$_t_contract$_BurnAuction_$431_$",
+                          "typeString": "type(contract BurnAuction)"
+                        }
+                      },
+                      "id": 504,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "kind": "typeConversion",
+                      "lValueRequested": false,
+                      "names": [],
+                      "nodeType": "FunctionCall",
+                      "src": "630:25:2",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_BurnAuction_$431",
+                        "typeString": "contract BurnAuction"
+                      }
+                    },
+                    "src": "616:39:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_BurnAuction_$431",
+                      "typeString": "contract BurnAuction"
+                    }
+                  },
+                  "id": 506,
+                  "nodeType": "ExpressionStatement",
+                  "src": "616:39:2"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 508,
+            "implemented": true,
+            "kind": "constructor",
+            "modifiers": [],
+            "name": "",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 499,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 498,
+                  "name": "_burnauction",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 508,
+                  "src": "576:20:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 497,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "576:7:2",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "575:22:2"
+            },
+            "returnParameters": {
+              "id": 500,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "605:0:2"
+            },
+            "scope": 519,
+            "src": "564:99:2",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 517,
+              "nodeType": "Block",
+              "src": "815:30:2",
+              "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
                     "hexValue": "74727565",
-                    "id": 509,
+                    "id": 515,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": true,
                     "kind": "bool",
                     "lValueRequested": false,
                     "nodeType": "Literal",
-                    "src": "750:4:2",
+                    "src": "833:4:2",
                     "subdenomination": null,
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
@@ -1131,37 +1203,57 @@
                     },
                     "value": "true"
                   },
-                  "functionReturnParameters": 490,
-                  "id": 510,
+                  "functionReturnParameters": 514,
+                  "id": 516,
                   "nodeType": "Return",
-                  "src": "743:11:2"
+                  "src": "826:11:2"
                 }
               ]
             },
             "documentation": null,
-            "id": 512,
+            "id": 518,
             "implemented": true,
             "kind": "function",
-            "modifiers": [],
+            "modifiers": [
+              {
+                "arguments": null,
+                "id": 511,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 510,
+                  "name": "onlyCoordinator",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 496,
+                  "src": "784:15:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$__$",
+                    "typeString": "modifier ()"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "784:15:2"
+              }
+            ],
             "name": "submitBatch",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 487,
+              "id": 509,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "538:2:2"
+              "src": "764:2:2"
             },
             "returnParameters": {
-              "id": 490,
+              "id": 514,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 489,
+                  "id": 513,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 512,
-                  "src": "567:4:2",
+                  "scope": 518,
+                  "src": "809:4:2",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1169,10 +1261,10 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 488,
+                    "id": 512,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
-                    "src": "567:4:2",
+                    "src": "809:4:2",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
@@ -1182,20 +1274,20 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "566:6:2"
+              "src": "808:6:2"
             },
-            "scope": 513,
-            "src": "518:244:2",
+            "scope": 519,
+            "src": "744:101:2",
             "stateMutability": "payable",
             "superFunction": null,
             "visibility": "external"
           }
         ],
-        "scope": 514,
-        "src": "141:624:2"
+        "scope": 520,
+        "src": "141:707:2"
       }
     ],
-    "src": "0:767:2"
+    "src": "0:850:2"
   },
   "compiler": {
     "name": "solc",
@@ -1258,7 +1350,7 @@
     }
   },
   "schemaVersion": "3.0.18",
-  "updatedAt": "2020-09-08T08:42:25.459Z",
+  "updatedAt": "2020-09-11T02:45:57.595Z",
   "devdoc": {
     "methods": {}
   },

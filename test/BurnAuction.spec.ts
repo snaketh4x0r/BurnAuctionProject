@@ -113,6 +113,11 @@ contract("BurnAuction", async function(accounts) {
       accounts[2]
     );
     assert(overbidwinner == true);
+    let nonoverbidwinner = await burnAuctionInstance.checkWinner(
+      slottoBid,
+      accounts[1]
+    );
+    assert(nonoverbidwinner == false);
   });
 
   it("Make winning Bid for others for slot 4", async function() {
@@ -167,11 +172,22 @@ contract("BurnAuction", async function(accounts) {
     let amountburnedoverbid = balaftersecondtx - balafterfirsttx;
     let diffamount = nextbidamount - minbid;
     assert(amountburnedoverbid === diffamount);
+    // check if slot winner updated correctly
+    let overbidwinner = await burnAuctionInstance.checkWinner(
+      slottoBid,
+      accounts[4]
+    );
+    assert(overbidwinner == true);
+    let nonoverbidwinner = await burnAuctionInstance.checkWinner(
+      slottoBid,
+      accounts[3]
+    );
+    assert(nonoverbidwinner == false);
   });
 
   // use get winner to check winner
   it("verify winners for current slot correctly", async function() {
-    // getcurrentwinner
+    // using getcurrentwinner
     skipslot();
     skipslot();
     let winner;
@@ -182,6 +198,11 @@ contract("BurnAuction", async function(accounts) {
       winner = coadd;
       assert(queriedaddress == winner);
     }
+    let result = await burnAuctionInstance.checkWinner.call(
+      currentslot,
+      queriedaddress
+    );
+    assert(result === true);
   });
 
   // helpers

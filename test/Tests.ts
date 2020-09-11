@@ -147,14 +147,6 @@ contract("BurnAuction", async function(accounts) {
     assert(bid[0].toNumber() === nextbidamount);
   });
 
-  // only for gas reports move to hubbletest,burnerauction.spec
-  it("should return correct winner for first auction slot", async function() {
-    let winner = await burnAuctionInstance.getCurrentWinner();
-    let subaddress = winner[0].toString();
-    //console.log((winner[0]).toString());
-    assert((subaddress = accounts[1]));
-  });
-
   // checkwinnerss using checkwinner and getwinner fr self
   // slots for others functionality from 12-20
   it("should not bid on current slot for others", async function() {
@@ -261,7 +253,7 @@ contract("BurnAuction", async function(accounts) {
     assert(bid[0].toNumber() === nextbidamount);
   });
 
-  // slots for testing different amount bid cases from 22-26
+  // slots for testing different amount bid cases from 22-25
   it("should not bid with ether less than minbid for self", async function() {
     let bidamount = minbid - 1;
     let currentslot = await burnAuctionInstance.currentSlot();
@@ -290,6 +282,22 @@ contract("BurnAuction", async function(accounts) {
     truffleAssert.eventEmitted(tx, "currentBestBid");
     assert(bid[1] === true);
     assert(bid[0].toNumber() === minbid);
+  });
+
+  it("should not overbid with ether less than current max bid for self", async function() {
+    let bidamount = minbid + 0;
+    let currentslot = await burnAuctionInstance.currentSlot();
+    let slottoBid = currentslot.toNumber() + 22;
+    try {
+      await burnAuctionInstance.bidBySelf(slottoBid, {
+        from: accounts[0],
+        value: bidamount
+      });
+    } catch (e) {
+      assert(e.message.includes("bid not enough to outbid current bidder"));
+      return;
+    }
+    assert(false);
   });
 
   it("should bid succesfully with ether more than minbid for self", async function() {
@@ -327,6 +335,40 @@ contract("BurnAuction", async function(accounts) {
   it("should bid succesfully with ether equal minbid for others", async function() {
     let bidamount = minbid + 0;
     let currentslot = await burnAuctionInstance.currentSlot();
+    let slottoBid = currentslot.toNumber() + 24;
+    let returnaddr = accounts[1];
+    let subaddr = accounts[2];
+    let tx = await burnAuctionInstance.bidForOthers(slottoBid, subaddr, {
+      from: accounts[0],
+      value: bidamount
+    });
+    let bid = await burnAuctionInstance.slotBid(slottoBid);
+    truffleAssert.eventEmitted(tx, "currentBestBid");
+    assert(bid[1] === true);
+    assert(bid[0].toNumber() === bidamount);
+  });
+
+  it("should not overbid with ether less than current max bid for others", async function() {
+    let bidamount = minbid + 0;
+    let currentslot = await burnAuctionInstance.currentSlot();
+    let slottoBid = currentslot.toNumber() + 24;
+    let returnaddr = accounts[1];
+    let subaddr = accounts[2];
+    try {
+      await burnAuctionInstance.bidForOthers(slottoBid, subaddr, {
+        from: accounts[0],
+        value: bidamount
+      });
+    } catch (e) {
+      assert(e.message.includes("bid not enough to outbid current bidder"));
+      return;
+    }
+    assert(false);
+  });
+
+  it("should bid succesfully with ether more than minbid for others", async function() {
+    let bidamount = minbid + 1;
+    let currentslot = await burnAuctionInstance.currentSlot();
     let slottoBid = currentslot.toNumber() + 25;
     let returnaddr = accounts[1];
     let subaddr = accounts[2];
@@ -340,20 +382,11 @@ contract("BurnAuction", async function(accounts) {
     assert(bid[0].toNumber() === bidamount);
   });
 
-  it("should bid succesfully with ether more than minbid for others", async function() {
-    let bidamount = minbid + 1;
-    let currentslot = await burnAuctionInstance.currentSlot();
-    let slottoBid = currentslot.toNumber() + 26;
-    let returnaddr = accounts[1];
-    let subaddr = accounts[2];
-    let tx = await burnAuctionInstance.bidForOthers(slottoBid, subaddr, {
-      from: accounts[0],
-      value: bidamount
-    });
-    let bid = await burnAuctionInstance.slotBid(slottoBid);
-    truffleAssert.eventEmitted(tx, "currentBestBid");
-    assert(bid[1] === true);
-    assert(bid[0].toNumber() === bidamount);
+  it("should return 0 if numblock less than genesisblock", async function() {
+    let genesisblock = await burnAuctionInstance.genesisBlock();
+    let numblock = genesisblock.toNumber() - 1;
+    let result = await burnAuctionInstance.block2slot.call(numblock);
+    assert(result.toNumber() === 0);
   });
 
   /* for testing skipblocks	
@@ -365,14 +398,14 @@ contract("BurnAuction", async function(accounts) {
 		let curb2 = await burnAuctionInstance.getBlockNumber();
 		console.log(curb2.toNumber());
 	});	
-    */
+    
   // tests for getwinner
   // first bid
   //let result = await burnAuctionInstance.bidBySelf.call(currentslotplustwo,url,{from: accounts[0],value:minbid});
   //assert(result === true);
   // getWinner
   // check winner also
-
+*/
   function randNo(min: any, max: number) {
     let randN = Math.random() * (max - min) + min;
     return Math.round(randN);
@@ -410,7 +443,7 @@ contract("HubbleTest", async function(accounts) {
     let slotne = await burnAuctionInstance.currentSlot();
     //console.log(slotne.toNumber());
     // make submit batch tx
-    let tx = await hubbleTestInstance.submitBatch.sendTransaction({
+    let tx = await hubbleTestInstance.submitBatch({
       from: accounts[0]
     });
     //console.log(tx);
@@ -420,6 +453,39 @@ contract("HubbleTest", async function(accounts) {
     let txstatus = tx.receipt.status;
     //console.log(txstatus);
     assert(txstatus === true);
+  });
+
+  it("should fail on submit batch by wrong account", async function() {
+    try {
+      let slotfi = await burnAuctionInstance.currentSlot();
+      //console.log(slotfi.toNumber());
+      let currentB = slotfi.toNumber();
+      // first bid
+      let slottoBid = currentB + 2;
+      // bid using account 0
+      let bid = await burnAuctionInstance.bidBySelf(slottoBid, {
+        from: accounts[0],
+        value: minbid
+      });
+      // then skip to slot won
+      skiptoauctionslot();
+      let slotne = await burnAuctionInstance.currentSlot();
+      //console.log(slotne.toNumber());
+      // make submit batch tx using account 1
+      let tx = await hubbleTestInstance.submitBatch({
+        from: accounts[1]
+      });
+      //console.log(tx);
+      let txreceipt = tx.receipt;
+      const gasCost = tx.receipt.gasUsed;
+      //console.log(gasCost);
+      let txstatus = tx.receipt.status;
+      //console.log(txstatus);
+    } catch (e) {
+      assert(e.message.includes("Coordinator didn't won slot"));
+      return;
+    }
+    assert(false);
   });
 
   // helpers

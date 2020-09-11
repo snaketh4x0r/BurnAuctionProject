@@ -8,6 +8,7 @@
   "dependencies": {
     "bip39": "^2.5.0",
     "chai": "^4.2.0",
+    "concurrently": "^5.2.0",
     "ethereumjs-wallet": "^0.6.2",
     "ethers": "^4.0.47",
     "ganache-cli": "^6.9.1",
@@ -48,6 +49,9 @@
     "compile": "truffle compile",
     "migrate": "truffle migrate --reset",
     "prettier": "prettier --write \"**/*.{sol,ts}\"",
-    "lint": "prettier --check \"**/*.{sol,ts}\""
+    "lint": "prettier --check \"**/*.{sol,ts}\"",
+    "actions:network": "npm run ganache",
+    "actions:tests": "npm run test",
+    "actions": "concurrently -r -s first -k npm:actions:*"
   }
 }
