@@ -1,6 +1,6 @@
 pragma solidity ^0.5.15;
 
-import {SafeMath} from "@openzeppelin/contracts/math/SafeMath.sol";
+import {SafeMath} from "./SafeMath.sol";
 
 contract BurnAuction {
     using SafeMath for uint256;
@@ -160,7 +160,7 @@ contract BurnAuction {
 
     /**
      * @dev Retrieve slot winner
-     * @return submitBatchAddress,returnAddress,Coordinator url,bidprice
+     * @return submitBatchAddress
      */
     function getCurrentWinner() public view returns (address) {
         uint32 querySlot = currentSlot();
